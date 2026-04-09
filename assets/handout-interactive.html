@@ -1,0 +1,173 @@
+<script>
+const initBiostatHandout = function () {
+  const root = document.documentElement;
+  const progressBar = document.createElement("div");
+  progressBar.id = "reading-progress";
+  document.body.appendChild(progressBar);
+
+  const updateProgress = function () {
+    const maxScroll = root.scrollHeight - root.clientHeight;
+    const ratio = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+    progressBar.style.transform = "scaleX(" + Math.min(Math.max(ratio, 0), 1) + ")";
+  };
+
+  updateProgress();
+  window.addEventListener("scroll", updateProgress, { passive: true });
+  window.addEventListener("resize", updateProgress);
+
+  const content = document.querySelector("main.content");
+  const titleBlock = document.getElementById("title-block-header");
+  const toc = document.querySelector("#TOC");
+
+  if (content && toc && !content.querySelector(".mobile-toc")) {
+    const mobileToc = document.createElement("div");
+    mobileToc.className = "mobile-toc";
+    mobileToc.innerHTML =
+      '<details><summary>Lompat ke bagian tertentu</summary><nav aria-label="Daftar isi mobile"></nav></details>';
+
+    const list = toc.querySelector("ul");
+    const nav = mobileToc.querySelector("nav");
+    if (list && nav) {
+      nav.appendChild(list.cloneNode(true));
+      if (titleBlock) {
+        titleBlock.insertAdjacentElement("afterend", mobileToc);
+      } else {
+        content.prepend(mobileToc);
+      }
+    }
+  }
+
+  document.querySelectorAll("main.content table").forEach(function (table) {
+    if (table.parentElement && table.parentElement.classList.contains("table-scroll")) {
+      return;
+    }
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "table-scroll";
+    table.parentNode.insertBefore(wrapper, table);
+    wrapper.appendChild(table);
+  });
+
+  const checklistItems = Array.from(document.querySelectorAll("main.content ul.task-list li"));
+  if (!checklistItems.length) {
+    return;
+  }
+
+  const checklistSection = document.getElementById("checklist-untuk-proposal-dan-skripsi");
+  let summary = checklistSection ? checklistSection.querySelector(".checklist-summary") : null;
+
+  if (!summary && checklistSection) {
+    summary = document.createElement("p");
+    summary.className = "checklist-summary";
+
+    const anchor = checklistSection.querySelector("p");
+    if (anchor) {
+      anchor.insertAdjacentElement("afterend", summary);
+    } else {
+      const heading = checklistSection.querySelector("h1, h2");
+      if (heading) {
+        heading.insertAdjacentElement("afterend", summary);
+      } else {
+        checklistSection.prepend(summary);
+      }
+    }
+  }
+
+  const storageAvailable = (function () {
+    try {
+      const probeKey = "__biostat_handout_probe__";
+      window.localStorage.setItem(probeKey, "1");
+      window.localStorage.removeItem(probeKey);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  })();
+
+  const slugify = function (text) {
+    return text
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, " ")
+      .replace(/[^a-z0-9\u00c0-\u024f]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 80);
+  };
+
+  const updateChecklistSummary = function () {
+    if (!summary) {
+      return;
+    }
+
+    const total = checklistItems.length;
+    const done = checklistItems.filter(function (item) {
+      const checkbox = item.querySelector('input[type="checkbox"]');
+      return checkbox && checkbox.checked;
+    }).length;
+
+    summary.textContent = storageAvailable
+      ? done + " dari " + total + " poin selesai pada browser ini."
+      : done + " dari " + total + " poin selesai pada sesi ini.";
+  };
+
+  checklistItems.forEach(function (item, index) {
+    const checkbox = item.querySelector('input[type="checkbox"]');
+    if (!checkbox) {
+      return;
+    }
+
+    checkbox.disabled = false;
+    checkbox.removeAttribute("disabled");
+
+    const section = item.closest("section[id]");
+    const label = slugify(item.textContent || "item-" + index);
+    const key = "biostat-handout-check:" + (section ? section.id : "checklist") + ":" + label;
+
+    if (storageAvailable) {
+      const savedState = window.localStorage.getItem(key);
+      if (savedState !== null) {
+        checkbox.checked = savedState === "true";
+      }
+    }
+
+    item.classList.toggle("is-checked", checkbox.checked);
+
+    checkbox.addEventListener("change", function () {
+      if (storageAvailable) {
+        window.localStorage.setItem(key, String(checkbox.checked));
+      }
+      item.classList.toggle("is-checked", checkbox.checked);
+      updateChecklistSummary();
+    });
+  });
+
+  updateChecklistSummary();
+
+  // PREMIUM UX: Back-to-Top Floating Action Button
+  const fab = document.createElement("button");
+  fab.className = "fab-btn";
+  fab.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/></svg>';
+  fab.setAttribute("aria-label", "Kembali ke atas");
+  fab.title = "Kembali ke atas";
+  document.body.appendChild(fab);
+
+  fab.addEventListener("click", function() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  window.addEventListener("scroll", function() {
+    if (window.scrollY > 400) {
+      fab.classList.add("visible");
+    } else {
+      fab.classList.remove("visible");
+    }
+  }, { passive: true });
+};
+
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initBiostatHandout);
+} else {
+  initBiostatHandout();
+}
+</script>

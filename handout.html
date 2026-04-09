@@ -1,0 +1,2176 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="id" xml:lang="id"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Disiapkan untuk sesi KPRO 5-6 | Anak Agung Bagus Wirayuda">
+<meta name="dcterms.date" content="2026-04-09">
+
+<title>Analisis Data dan Perkiraan Besar Sampel</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="handout_files/libs/clipboard/clipboard.min.js"></script>
+<script src="handout_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="handout_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="handout_files/libs/quarto-html/popper.min.js"></script>
+<script src="handout_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="handout_files/libs/quarto-html/anchor.min.js"></script>
+<link href="handout_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="handout_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="handout_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="handout_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="handout_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="handout_files/libs/quarto-diagram/mermaid.min.js"></script>
+<script src="handout_files/libs/quarto-diagram/mermaid-init.js"></script>
+<link href="handout_files/libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="styles/handout.css">
+</head>
+
+<body class="quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+<div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+  <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Daftar Isi</h2>
+   
+  <ul>
+  <li><a href="#kenapa-materi-ini-penting-dalam-pendidikan-dokter" id="toc-kenapa-materi-ini-penting-dalam-pendidikan-dokter" class="nav-link active" data-scroll-target="#kenapa-materi-ini-penting-dalam-pendidikan-dokter"><span class="header-section-number">1</span> Kenapa Materi Ini Penting dalam Pendidikan Dokter</a>
+  <ul class="collapse">
+  <li><a href="#peta-kompetensi-yang-didukung" id="toc-peta-kompetensi-yang-didukung" class="nav-link" data-scroll-target="#peta-kompetensi-yang-didukung"><span class="header-section-number">1.1</span> Peta Kompetensi yang Didukung</a></li>
+  </ul></li>
+  <li><a href="#capaian-belajar-sesi" id="toc-capaian-belajar-sesi" class="nav-link" data-scroll-target="#capaian-belajar-sesi"><span class="header-section-number">2</span> Capaian Belajar Sesi</a></li>
+  <li><a href="#cara-paling-sehat-mempelajari-materi-ini" id="toc-cara-paling-sehat-mempelajari-materi-ini" class="nav-link" data-scroll-target="#cara-paling-sehat-mempelajari-materi-ini"><span class="header-section-number">3</span> Cara Paling Sehat Mempelajari Materi Ini</a></li>
+  <li><a href="#mitos-yang-sebaiknya-kalian-tinggalkan" id="toc-mitos-yang-sebaiknya-kalian-tinggalkan" class="nav-link" data-scroll-target="#mitos-yang-sebaiknya-kalian-tinggalkan"><span class="header-section-number">4</span> Mitos yang Sebaiknya Kalian Tinggalkan</a></li>
+  <li><a href="#peta-sesi-110-menit" id="toc-peta-sesi-110-menit" class="nav-link" data-scroll-target="#peta-sesi-110-menit"><span class="header-section-number">5</span> Peta Sesi 110 Menit</a></li>
+  <li><a href="#apa-yang-harus-sudah-jelas-sebelum-bab-metode-ditulis" id="toc-apa-yang-harus-sudah-jelas-sebelum-bab-metode-ditulis" class="nav-link" data-scroll-target="#apa-yang-harus-sudah-jelas-sebelum-bab-metode-ditulis"><span class="header-section-number">6</span> Apa yang Harus Sudah Jelas Sebelum Bab Metode Ditulis</a></li>
+  <li><a href="#benang-merah-dari-pertanyaan-ke-keputusan-analitik" id="toc-benang-merah-dari-pertanyaan-ke-keputusan-analitik" class="nav-link" data-scroll-target="#benang-merah-dari-pertanyaan-ke-keputusan-analitik"><span class="header-section-number">7</span> Benang Merah: dari Pertanyaan ke Keputusan Analitik</a></li>
+  <li><a href="#langkah-1-merumuskan-pertanyaan-penelitian" id="toc-langkah-1-merumuskan-pertanyaan-penelitian" class="nav-link" data-scroll-target="#langkah-1-merumuskan-pertanyaan-penelitian"><span class="header-section-number">8</span> Langkah 1: Merumuskan Pertanyaan Penelitian</a>
+  <ul class="collapse">
+  <li><a href="#empat-bentuk-pertanyaan-yang-paling-sering-muncul" id="toc-empat-bentuk-pertanyaan-yang-paling-sering-muncul" class="nav-link" data-scroll-target="#empat-bentuk-pertanyaan-yang-paling-sering-muncul"><span class="header-section-number">8.1</span> Empat Bentuk Pertanyaan yang Paling Sering Muncul</a></li>
+  <li><a href="#cara-membaca-judul-skripsi-secara-metodologis" id="toc-cara-membaca-judul-skripsi-secara-metodologis" class="nav-link" data-scroll-target="#cara-membaca-judul-skripsi-secara-metodologis"><span class="header-section-number">8.2</span> Cara Membaca Judul Skripsi secara Metodologis</a></li>
+  </ul></li>
+  <li><a href="#langkah-2-mengenali-desain-dan-variabel" id="toc-langkah-2-mengenali-desain-dan-variabel" class="nav-link" data-scroll-target="#langkah-2-mengenali-desain-dan-variabel"><span class="header-section-number">9</span> Langkah 2: Mengenali Desain dan Variabel</a>
+  <ul class="collapse">
+  <li><a href="#desain-yang-paling-sering-dijumpai" id="toc-desain-yang-paling-sering-dijumpai" class="nav-link" data-scroll-target="#desain-yang-paling-sering-dijumpai"><span class="header-section-number">9.1</span> Desain yang Paling Sering Dijumpai</a></li>
+  <li><a href="#jenis-variabel-yang-wajib-dapat-dikenali" id="toc-jenis-variabel-yang-wajib-dapat-dikenali" class="nav-link" data-scroll-target="#jenis-variabel-yang-wajib-dapat-dikenali"><span class="header-section-number">9.2</span> Jenis Variabel yang Wajib Dapat Dikenali</a></li>
+  <li><a href="#mengapa-outcome-utama-harus-jelas" id="toc-mengapa-outcome-utama-harus-jelas" class="nav-link" data-scroll-target="#mengapa-outcome-utama-harus-jelas"><span class="header-section-number">9.3</span> Mengapa Outcome Utama Harus Jelas</a></li>
+  <li><a href="#cara-menerjemahkan-semua-ini-ke-bab-metode" id="toc-cara-menerjemahkan-semua-ini-ke-bab-metode" class="nav-link" data-scroll-target="#cara-menerjemahkan-semua-ini-ke-bab-metode"><span class="header-section-number">9.4</span> Cara Menerjemahkan Semua Ini ke Bab Metode</a></li>
+  </ul></li>
+  <li><a href="#langkah-3-memilih-analisis-data" id="toc-langkah-3-memilih-analisis-data" class="nav-link" data-scroll-target="#langkah-3-memilih-analisis-data"><span class="header-section-number">10</span> Langkah 3: Memilih Analisis Data</a>
+  <ul class="collapse">
+  <li><a href="#prinsip-umum" id="toc-prinsip-umum" class="nav-link" data-scroll-target="#prinsip-umum"><span class="header-section-number">10.1</span> Prinsip Umum</a></li>
+  <li><a href="#a.-apabila-tujuan-penelitian-bersifat-deskriptif" id="toc-a.-apabila-tujuan-penelitian-bersifat-deskriptif" class="nav-link" data-scroll-target="#a.-apabila-tujuan-penelitian-bersifat-deskriptif"><span class="header-section-number">10.2</span> A. Apabila Tujuan Penelitian Bersifat Deskriptif</a></li>
+  <li><a href="#b.-apabila-tujuan-penelitian-bersifat-komparatif" id="toc-b.-apabila-tujuan-penelitian-bersifat-komparatif" class="nav-link" data-scroll-target="#b.-apabila-tujuan-penelitian-bersifat-komparatif"><span class="header-section-number">10.3</span> B. Apabila Tujuan Penelitian Bersifat Komparatif</a></li>
+  <li><a href="#c.-apabila-tujuan-penelitian-bersifat-asosiatif-atau-prediktif" id="toc-c.-apabila-tujuan-penelitian-bersifat-asosiatif-atau-prediktif" class="nav-link" data-scroll-target="#c.-apabila-tujuan-penelitian-bersifat-asosiatif-atau-prediktif"><span class="header-section-number">10.4</span> C. Apabila Tujuan Penelitian Bersifat Asosiatif atau Prediktif</a></li>
+  <li><a href="#matriks-inti-pemilihan-analisis" id="toc-matriks-inti-pemilihan-analisis" class="nav-link" data-scroll-target="#matriks-inti-pemilihan-analisis"><span class="header-section-number">10.5</span> Matriks Inti Pemilihan Analisis</a></li>
+  <li><a href="#pohon-keputusan-sederhana" id="toc-pohon-keputusan-sederhana" class="nav-link" data-scroll-target="#pohon-keputusan-sederhana"><span class="header-section-number">10.6</span> Pohon Keputusan Sederhana</a></li>
+  <li><a href="#parametrik-dan-nonparametrik-apa-yang-perlu-kalian-pahami" id="toc-parametrik-dan-nonparametrik-apa-yang-perlu-kalian-pahami" class="nav-link" data-scroll-target="#parametrik-dan-nonparametrik-apa-yang-perlu-kalian-pahami"><span class="header-section-number">10.7</span> Parametrik dan Nonparametrik: Apa yang Perlu Kalian Pahami</a></li>
+  <li><a href="#tempatkan-uji-normalitas-di-posisi-yang-benar" id="toc-tempatkan-uji-normalitas-di-posisi-yang-benar" class="nav-link" data-scroll-target="#tempatkan-uji-normalitas-di-posisi-yang-benar"><span class="header-section-number">10.8</span> Tempatkan Uji Normalitas di Posisi yang Benar</a></li>
+  <li><a href="#membaca-hasil-dengan-lebih-sehat" id="toc-membaca-hasil-dengan-lebih-sehat" class="nav-link" data-scroll-target="#membaca-hasil-dengan-lebih-sehat"><span class="header-section-number">10.9</span> Membaca Hasil dengan Lebih Sehat</a>
+  <ul class="collapse">
+  <li><a href="#p-value" id="toc-p-value" class="nav-link" data-scroll-target="#p-value"><span class="header-section-number">10.9.1</span> 1. P-value</a></li>
+  <li><a href="#interval-kepercayaan" id="toc-interval-kepercayaan" class="nav-link" data-scroll-target="#interval-kepercayaan"><span class="header-section-number">10.9.2</span> 2. Interval Kepercayaan</a></li>
+  <li><a href="#besar-efek-dan-makna-klinis" id="toc-besar-efek-dan-makna-klinis" class="nav-link" data-scroll-target="#besar-efek-dan-makna-klinis"><span class="header-section-number">10.9.3</span> 3. Besar Efek dan Makna Klinis</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#langkah-4-memahami-logika-perkiraan-besar-sampel" id="toc-langkah-4-memahami-logika-perkiraan-besar-sampel" class="nav-link" data-scroll-target="#langkah-4-memahami-logika-perkiraan-besar-sampel"><span class="header-section-number">11</span> Langkah 4: Memahami Logika Perkiraan Besar Sampel</a>
+  <ul class="collapse">
+  <li><a href="#lima-komponen-yang-harus-dipahami" id="toc-lima-komponen-yang-harus-dipahami" class="nav-link" data-scroll-target="#lima-komponen-yang-harus-dipahami"><span class="header-section-number">11.1</span> Lima Komponen yang Harus Dipahami</a></li>
+  <li><a href="#intuisi-dasar-yang-harus-ditanamkan" id="toc-intuisi-dasar-yang-harus-ditanamkan" class="nav-link" data-scroll-target="#intuisi-dasar-yang-harus-ditanamkan"><span class="header-section-number">11.2</span> Intuisi Dasar yang Harus Ditanamkan</a></li>
+  <li><a href="#skenario-perhitungan-yang-paling-sering-digunakan" id="toc-skenario-perhitungan-yang-paling-sering-digunakan" class="nav-link" data-scroll-target="#skenario-perhitungan-yang-paling-sering-digunakan"><span class="header-section-number">11.3</span> Skenario Perhitungan yang Paling Sering Digunakan</a></li>
+  <li><a href="#peta-besar-sampel-menurut-desain" id="toc-peta-besar-sampel-menurut-desain" class="nav-link" data-scroll-target="#peta-besar-sampel-menurut-desain"><span class="header-section-number">11.4</span> Peta Besar Sampel Menurut Desain</a></li>
+  <li><a href="#formula-dasar-yang-patut-dikenali" id="toc-formula-dasar-yang-patut-dikenali" class="nav-link" data-scroll-target="#formula-dasar-yang-patut-dikenali"><span class="header-section-number">11.5</span> Formula Dasar yang Patut Dikenali</a></li>
+  <li><a href="#apa-yang-sering-ditanya-pembimbing-saat-membahas-besar-sampel" id="toc-apa-yang-sering-ditanya-pembimbing-saat-membahas-besar-sampel" class="nav-link" data-scroll-target="#apa-yang-sering-ditanya-pembimbing-saat-membahas-besar-sampel"><span class="header-section-number">11.6</span> Apa yang Sering Ditanya Pembimbing saat Membahas Besar Sampel</a></li>
+  <li><a href="#empat-pertanyaan-sebelum-menghitung-besar-sampel" id="toc-empat-pertanyaan-sebelum-menghitung-besar-sampel" class="nav-link" data-scroll-target="#empat-pertanyaan-sebelum-menghitung-besar-sampel"><span class="header-section-number">11.7</span> Empat Pertanyaan sebelum Menghitung Besar Sampel</a></li>
+  <li><a href="#tiga-pola-besar-sampel-yang-paling-praktis-buat-kalian" id="toc-tiga-pola-besar-sampel-yang-paling-praktis-buat-kalian" class="nav-link" data-scroll-target="#tiga-pola-besar-sampel-yang-paling-praktis-buat-kalian"><span class="header-section-number">11.8</span> Tiga Pola Besar Sampel yang Paling Praktis Buat Kalian</a>
+  <ul class="collapse">
+  <li><a href="#penelitian-observasional-deskriptif-atau-survei" id="toc-penelitian-observasional-deskriptif-atau-survei" class="nav-link" data-scroll-target="#penelitian-observasional-deskriptif-atau-survei"><span class="header-section-number">11.8.1</span> 1. Penelitian observasional deskriptif atau survei</a></li>
+  <li><a href="#penelitian-analitik-sederhana" id="toc-penelitian-analitik-sederhana" class="nav-link" data-scroll-target="#penelitian-analitik-sederhana"><span class="header-section-number">11.8.2</span> 2. Penelitian analitik sederhana</a></li>
+  <li><a href="#penelitian-eksperimental-laboratorium-sederhana" id="toc-penelitian-eksperimental-laboratorium-sederhana" class="nav-link" data-scroll-target="#penelitian-eksperimental-laboratorium-sederhana"><span class="header-section-number">11.8.3</span> 3. Penelitian eksperimental laboratorium sederhana</a></li>
+  </ul></li>
+  <li><a href="#tentang-tambahan-drop-out" id="toc-tentang-tambahan-drop-out" class="nav-link" data-scroll-target="#tentang-tambahan-drop-out"><span class="header-section-number">11.9</span> Tentang Tambahan Drop-out</a></li>
+  </ul></li>
+  <li><a href="#contoh-penerapan-pada-topik-skripsi" id="toc-contoh-penerapan-pada-topik-skripsi" class="nav-link" data-scroll-target="#contoh-penerapan-pada-topik-skripsi"><span class="header-section-number">12</span> Contoh Penerapan pada Topik Skripsi</a>
+  <ul class="collapse">
+  <li><a href="#contoh-1-hubungan-durasi-tidur-dengan-tekanan-darah-sistolik" id="toc-contoh-1-hubungan-durasi-tidur-dengan-tekanan-darah-sistolik" class="nav-link" data-scroll-target="#contoh-1-hubungan-durasi-tidur-dengan-tekanan-darah-sistolik"><span class="header-section-number">12.1</span> Contoh 1: Hubungan Durasi Tidur dengan Tekanan Darah Sistolik</a></li>
+  <li><a href="#contoh-2-perbedaan-proporsi-anemia-pada-remaja-putri-urban-dan-rural" id="toc-contoh-2-perbedaan-proporsi-anemia-pada-remaja-putri-urban-dan-rural" class="nav-link" data-scroll-target="#contoh-2-perbedaan-proporsi-anemia-pada-remaja-putri-urban-dan-rural"><span class="header-section-number">12.2</span> Contoh 2: Perbedaan Proporsi Anemia pada Remaja Putri Urban dan Rural</a></li>
+  <li><a href="#contoh-3-perubahan-tekanan-darah-sebelum-dan-sesudah-edukasi-gaya-hidup" id="toc-contoh-3-perubahan-tekanan-darah-sebelum-dan-sesudah-edukasi-gaya-hidup" class="nav-link" data-scroll-target="#contoh-3-perubahan-tekanan-darah-sebelum-dan-sesudah-edukasi-gaya-hidup"><span class="header-section-number">12.3</span> Contoh 3: Perubahan Tekanan Darah sebelum dan Sesudah Edukasi Gaya Hidup</a></li>
+  </ul></li>
+  <li><a href="#kekeliruan-yang-paling-sering-ditemukan" id="toc-kekeliruan-yang-paling-sering-ditemukan" class="nav-link" data-scroll-target="#kekeliruan-yang-paling-sering-ditemukan"><span class="header-section-number">13</span> Kekeliruan yang Paling Sering Ditemukan</a></li>
+  <li><a href="#pakai-software-tanpa-kehilangan-arah" id="toc-pakai-software-tanpa-kehilangan-arah" class="nav-link" data-scroll-target="#pakai-software-tanpa-kehilangan-arah"><span class="header-section-number">14</span> Pakai Software tanpa Kehilangan Arah</a>
+  <ul class="collapse">
+  <li><a href="#alat-yang-paling-relevan-untuk-kalian" id="toc-alat-yang-paling-relevan-untuk-kalian" class="nav-link" data-scroll-target="#alat-yang-paling-relevan-untuk-kalian"><span class="header-section-number">14.1</span> Alat yang Paling Relevan untuk Kalian</a></li>
+  <li><a href="#alur-praktis-yang-paling-aman-buat-kalian" id="toc-alur-praktis-yang-paling-aman-buat-kalian" class="nav-link" data-scroll-target="#alur-praktis-yang-paling-aman-buat-kalian"><span class="header-section-number">14.2</span> Alur Praktis yang Paling Aman Buat Kalian</a></li>
+  </ul></li>
+  <li><a href="#supaya-hasil-kalian-tertulis-rapi" id="toc-supaya-hasil-kalian-tertulis-rapi" class="nav-link" data-scroll-target="#supaya-hasil-kalian-tertulis-rapi"><span class="header-section-number">15</span> Supaya Hasil Kalian Tertulis Rapi</a>
+  <ul class="collapse">
+  <li><a href="#tiga-kebiasaan-pelaporan-yang-layak-ditanamkan" id="toc-tiga-kebiasaan-pelaporan-yang-layak-ditanamkan" class="nav-link" data-scroll-target="#tiga-kebiasaan-pelaporan-yang-layak-ditanamkan"><span class="header-section-number">15.1</span> Tiga Kebiasaan Pelaporan yang Layak Ditanamkan</a></li>
+  </ul></li>
+  <li><a href="#latihan-yang-bisa-kalian-pakai" id="toc-latihan-yang-bisa-kalian-pakai" class="nav-link" data-scroll-target="#latihan-yang-bisa-kalian-pakai"><span class="header-section-number">16</span> Latihan yang Bisa Kalian Pakai</a>
+  <ul class="collapse">
+  <li><a href="#aktivitas-1-bedah-judul-skripsi" id="toc-aktivitas-1-bedah-judul-skripsi" class="nav-link" data-scroll-target="#aktivitas-1-bedah-judul-skripsi"><span class="header-section-number">16.1</span> Aktivitas 1: Bedah Judul Skripsi</a></li>
+  <li><a href="#aktivitas-2-tebak-keluarga-analisis" id="toc-aktivitas-2-tebak-keluarga-analisis" class="nav-link" data-scroll-target="#aktivitas-2-tebak-keluarga-analisis"><span class="header-section-number">16.2</span> Aktivitas 2: Tebak Keluarga Analisis</a></li>
+  <li><a href="#aktivitas-3-membaca-output-secara-kritis" id="toc-aktivitas-3-membaca-output-secara-kritis" class="nav-link" data-scroll-target="#aktivitas-3-membaca-output-secara-kritis"><span class="header-section-number">16.3</span> Aktivitas 3: Membaca Output secara Kritis</a></li>
+  </ul></li>
+  <li><a href="#bank-kasus-mini-untuk-slide-dan-soal" id="toc-bank-kasus-mini-untuk-slide-dan-soal" class="nav-link" data-scroll-target="#bank-kasus-mini-untuk-slide-dan-soal"><span class="header-section-number">17</span> Bank Kasus Mini untuk Slide dan Soal</a></li>
+  <li><a href="#checklist-untuk-proposal-dan-skripsi" id="toc-checklist-untuk-proposal-dan-skripsi" class="nav-link" data-scroll-target="#checklist-untuk-proposal-dan-skripsi"><span class="header-section-number">18</span> Checklist untuk Proposal dan Skripsi</a>
+  <ul class="collapse">
+  <li><a href="#sebelum-proposal-diajukan" id="toc-sebelum-proposal-diajukan" class="nav-link" data-scroll-target="#sebelum-proposal-diajukan"><span class="header-section-number">18.1</span> Sebelum Proposal Diajukan</a></li>
+  <li><a href="#saat-menulis-bab-hasil" id="toc-saat-menulis-bab-hasil" class="nav-link" data-scroll-target="#saat-menulis-bab-hasil"><span class="header-section-number">18.2</span> Saat Menulis Bab Hasil</a></li>
+  <li><a href="#saat-menulis-pembahasan" id="toc-saat-menulis-pembahasan" class="nav-link" data-scroll-target="#saat-menulis-pembahasan"><span class="header-section-number">18.3</span> Saat Menulis Pembahasan</a></li>
+  </ul></li>
+  <li><a href="#penutup" id="toc-penutup" class="nav-link" data-scroll-target="#penutup"><span class="header-section-number">19</span> Penutup</a></li>
+  <li><a href="#referensi" id="toc-referensi" class="nav-link" data-scroll-target="#referensi"><span class="header-section-number">20</span> Referensi</a></li>
+  </ul>
+<div class="quarto-alternate-formats"><h2>Format Lain</h2><ul><li><a href="handout.pdf"><i class="bi bi-file-pdf"></i>Typst</a></li></ul></div></nav>
+</div>
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Analisis Data dan Perkiraan Besar Sampel</h1>
+<p class="subtitle lead">Buku kerja inti untuk membantu kalian mengambil keputusan metode pada skripsi kedokteran</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Penulis</div>
+    <div class="quarto-title-meta-contents">
+             <p>Disiapkan untuk sesi KPRO 5-6 | Anak Agung Bagus Wirayuda </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Diterbitkan</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">9 April 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Penting</span>Orientasi Handout
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Handout ini disusun sebagai pegangan kerja, bukan sekadar ringkasan kuliah. Tujuannya sederhana: membantu kalian menerjemahkan pertanyaan penelitian menjadi keputusan metodologis yang rapi, mulai dari desain, variabel, analisis data, sampai perkiraan besar sampel yang masuk akal dan bisa dipertanggungjawabkan.</p>
+<p>Dengan kata lain, handout ini tidak ditulis untuk membuat kalian jadi ahli statistik. Handout ini ditulis supaya kalian punya kebiasaan berpikir ilmiah yang rapi saat menyusun proposal, mengolah data, dan mempertahankan skripsi.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Catatan</span>Cara Memakai Handout Ini
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Anggap dokumen ini sebagai <strong>source of truth</strong> untuk sesi KPRO ini. Artinya:</p>
+<ul>
+<li>bagian awal memberi kalian <strong>prinsip inti</strong> yang harus selalu diingat;</li>
+<li>bagian tengah memberi kalian <strong>peta keputusan</strong> untuk desain, analisis, dan besar sampel;</li>
+<li>bagian contoh memberi kalian <strong>cara membaca judul skripsi secara metodologis</strong>; dan</li>
+<li>bagian akhir memberi kalian <strong>alat kerja</strong> berupa checklist, latihan, dan kebiasaan pelaporan.</li>
+</ul>
+<p>Kalau nanti kita membuat slide, latihan, atau soal, semuanya idealnya turun dari logika yang ada di handout ini, bukan dari potongan-potongan materi yang berdiri sendiri.</p>
+</div>
+</div>
+<section id="kenapa-materi-ini-penting-dalam-pendidikan-dokter" class="level1" data-number="1">
+<h1 data-number="1"><span class="header-section-number">1</span> Kenapa Materi Ini Penting dalam Pendidikan Dokter</h1>
+<p>Dalam pendidikan dokter, analisis data dan perkiraan besar sampel tidak dapat diposisikan sebagai keterampilan tambahan yang berdiri di pinggir kurikulum. Keduanya merupakan bagian dari kemampuan dokter untuk mengelola informasi, berpijak pada landasan ilmiah ilmu kedokteran, serta menilai masalah kesehatan dengan nalar yang sistematis. Dalam berbagai panduan akademik pendidikan dokter di Indonesia, orientasi ini tampak pada penggunaan <strong>SKDI 2012</strong> sebagai kerangka kompetensi yang masih dirujuk, kemudian diperluas oleh <strong>SNPPDI 2019</strong> yang menegaskan profil lulusan tidak hanya sebagai klinisi, melainkan pula sebagai pembelajar, pendidik, dan peneliti <span class="citation" data-cites="fkusk2024guide undana2023cpl">(<a href="#ref-fkusk2024guide" role="doc-biblioref">Fakultas Kedokteran Universitas Syiah Kuala 2024</a>; <a href="#ref-undana2023cpl" role="doc-biblioref">Program Studi Pendidikan Dokter FK Universitas Nusa Cendana 2023</a>)</span>.</p>
+<p>Di level sarjana, implikasinya sebenarnya sangat jelas. Kalian tidak perlu menguasai seluruh keluarga uji statistik secara mendalam. Namun, kalian perlu cukup cakap untuk:</p>
+<ul>
+<li>merumuskan pertanyaan penelitian dengan jernih</li>
+<li>mengenali outcome utama penelitian</li>
+<li>memilih pendekatan analisis yang sejalan dengan desain dan jenis data</li>
+<li>memahami logika dasar perhitungan besar sampel</li>
+<li>membaca hasil dengan hati-hati dan tidak membuat klaim yang melampaui kekuatan desain</li>
+</ul>
+<section id="peta-kompetensi-yang-didukung" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="peta-kompetensi-yang-didukung"><span class="header-section-number">1.1</span> Peta Kompetensi yang Didukung</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Area kompetensi</th>
+<th>Relevansi terhadap sesi ini</th>
+<th>Kalau bagian ini nyambung, kalian akan…</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Pengelolaan informasi</td>
+<td>Kalian menata pertanyaan, variabel, data, dan hasil analisis secara tertib</td>
+<td>Tidak lagi bingung membedakan outcome, paparan, kovariat, dan faktor perancu</td>
+</tr>
+<tr class="even">
+<td>Landasan ilmiah ilmu kedokteran</td>
+<td>Kalian memilih analisis berdasarkan alasan metodologis</td>
+<td>Pemilihan uji tidak sekadar meniru contoh tugas akhir sebelumnya</td>
+</tr>
+<tr class="odd">
+<td>Pengelolaan masalah kesehatan</td>
+<td>Kalian menghubungkan hasil analisis dengan persoalan klinis atau kesehatan masyarakat</td>
+<td>Interpretasi hasil menjadi lebih bermakna dan tidak berhenti pada angka</td>
+</tr>
+<tr class="even">
+<td>Mawas diri dan pengembangan diri</td>
+<td>Kalian memahami batas kompetensi sendiri</td>
+<td>Mengetahui kapan analisis masih sederhana dan kapan perlu konsultasi lebih lanjut</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="capaian-belajar-sesi" class="level1" data-number="2">
+<h1 data-number="2"><span class="header-section-number">2</span> Capaian Belajar Sesi</h1>
+<p>Pada akhir sesi, harapannya kalian bisa:</p>
+<ol type="1">
+<li>mengidentifikasi jenis pertanyaan penelitian yang paling umum muncul pada skripsi kedokteran;</li>
+<li>memetakan desain penelitian serta jenis variabel yang terlibat;</li>
+<li>memilih analisis dasar yang konsisten dengan tujuan penelitian;</li>
+<li>menjelaskan logika dasar perkiraan besar sampel; dan</li>
+<li>menafsirkan hasil analisis secara lebih hati-hati, dengan membedakan signifikansi statistik dan makna klinis.</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Catatan</span>Pesan Inti Buat Kalian
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>Statistik bukan dimulai dari software.</code><br>
+<code>Statistik dimulai dari pertanyaan penelitian yang dirumuskan dengan baik.</code></p>
+</div>
+</div>
+</section>
+<section id="cara-paling-sehat-mempelajari-materi-ini" class="level1" data-number="3">
+<h1 data-number="3"><span class="header-section-number">3</span> Cara Paling Sehat Mempelajari Materi Ini</h1>
+<p>Literatur pendidikan statistik modern menekankan bahwa kalian akan belajar lebih baik ketika statistik diajarkan sebagai <strong>cara bernalar dengan data</strong>, memakai konteks nyata, active learning, dan asesmen formatif, bukan sebagai kumpulan rumus yang harus dihafal <span class="citation" data-cites="asa2016gaise">(<a href="#ref-asa2016gaise" role="doc-biblioref">American Statistical Association 2016</a>)</span>. Dalam pendidikan kedokteran, pengajaran riset juga terbukti lebih bermakna bila dikaitkan dengan skenario klinis yang autentik, disertai pembacaan artikel secara terbimbing, dan dihubungkan dengan keputusan nyata yang nanti memang harus kalian ambil saat menyusun skripsi <span class="citation" data-cites="jiang2021teaching ciarlo2025ebm">(<a href="#ref-jiang2021teaching" role="doc-biblioref">Lee dkk. 2021</a>; <a href="#ref-ciarlo2025ebm" role="doc-biblioref">Wallerstedt dkk. 2025</a>)</span>.</p>
+<p>Atas dasar itu, sesi ini sebaiknya berjalan dengan prinsip berikut:</p>
+<ul>
+<li>memulai dari <strong>kasus skripsi</strong> yang familier bagi kalian;</li>
+<li>memperlakukan statistik sebagai <strong>alat pengambilan keputusan</strong>;</li>
+<li>menggunakan jumlah konsep yang terbatas tetapi dipahami dengan baik;</li>
+<li>melatih interpretasi, bukan hanya pemilihan nama uji; dan</li>
+<li>menutup sesi dengan alat bantu praktis yang dapat langsung kalian bawa pulang.</li>
+</ul>
+<p>Konsekuensinya, handout ini sengaja ditulis dengan urutan yang sangat operasional:</p>
+<ol type="1">
+<li>mulai dari pertanyaan penelitian;</li>
+<li>tegaskan desain dan outcome utama;</li>
+<li>pilih analisis yang paling masuk akal;</li>
+<li>baru tentukan pendekatan besar sampel; dan</li>
+<li>akhirnya, tulis hasil dengan bahasa ilmiah yang rapi.</li>
+</ol>
+</section>
+<section id="mitos-yang-sebaiknya-kalian-tinggalkan" class="level1" data-number="4">
+<h1 data-number="4"><span class="header-section-number">4</span> Mitos yang Sebaiknya Kalian Tinggalkan</h1>
+<p>Dalam praktiknya, banyak kebiasaan metodologis diwariskan dari satu angkatan ke angkatan berikutnya. Sebagian terdengar praktis, tetapi justru membuat proposal dan hasil penelitian jadi rapuh. Karena itu, sebelum kalian belajar memilih analisis, penting untuk membedakan mana kebiasaan lama yang perlu ditinggalkan dan mana praktik yang lebih sehat.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Mitos yang sering beredar</th>
+<th>Mengapa bermasalah</th>
+<th>Praktik yang lebih baik</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Semua besar sampel bisa dihitung dengan Slovin</td>
+<td>Terlalu umum dan tidak dibangun dari outcome utama penelitian kesehatan</td>
+<td>Mulai dari outcome utama dan pilih pendekatan sesuai desain serta tujuan penelitian</td>
+</tr>
+<tr class="even">
+<td>Semua data numerik harus lulus uji normalitas dulu sebelum apa pun</td>
+<td>Uji normalitas bukan satu-satunya dasar keputusan</td>
+<td>Pertimbangkan juga bentuk distribusi, ukuran sampel, outlier, dan konteks analitik</td>
+</tr>
+<tr class="odd">
+<td>Federer adalah rumus sakti untuk semua penelitian eksperimental</td>
+<td>Federer lebih tepat dipahami sebagai rule of thumb pada situasi tertentu, bukan solusi universal</td>
+<td>Gunakan Federer secara hati-hati dan tetap pahami desain serta tujuan eksperimen</td>
+</tr>
+<tr class="even">
+<td>Kalau p-value sudah signifikan, penelitian pasti bagus</td>
+<td>P-value bukan ukuran besar efek dan bukan ukuran mutu desain</td>
+<td>Selalu lihat besar efek, interval kepercayaan, dan makna klinis</td>
+</tr>
+<tr class="odd">
+<td>Output software otomatis berarti analisis sudah benar</td>
+<td>Software hanya menjalankan perintah, bukan menggantikan nalar peneliti</td>
+<td>Tentukan logika analisis sebelum membuka software</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Peringatan</span>Catatan Penting tentang Slovin
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Untuk konteks skripsi kedokteran, memakai Slovin sebagai jawaban default hampir selalu terlalu dangkal. Perhitungan besar sampel jauh lebih sehat kalau dikaitkan dengan outcome utama, proporsi dasar, simpangan baku, besar efek yang ingin dideteksi, serta risiko salah yang masih bisa diterima.</p>
+</div>
+</div>
+</section>
+<section id="peta-sesi-110-menit" class="level1" data-number="5">
+<h1 data-number="5"><span class="header-section-number">5</span> Peta Sesi 110 Menit</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 30%">
+<col style="width: 23%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Segmen</th>
+<th style="text-align: right;">Durasi</th>
+<th>Fokus pengajaran</th>
+<th>Harapannya, setelah segmen ini kalian…</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Pembuka dan orientasi</td>
+<td style="text-align: right;">10 menit</td>
+<td>Menjelaskan urgensi materi bagi skripsi</td>
+<td>merasa materi ini relevan dan tidak terpisah dari kebutuhan nyata</td>
+</tr>
+<tr class="even">
+<td>Fondasi desain dan variabel</td>
+<td style="text-align: right;">20 menit</td>
+<td>Menata pertanyaan penelitian, desain, outcome, dan jenis data</td>
+<td>punya kerangka awal sebelum memilih analisis</td>
+</tr>
+<tr class="odd">
+<td>Analisis data</td>
+<td style="text-align: right;">30 menit</td>
+<td>Menjelaskan keluarga analisis yang paling sering dipakai</td>
+<td>mampu memilih analisis dasar yang tepat</td>
+</tr>
+<tr class="even">
+<td>Besar sampel</td>
+<td style="text-align: right;">25 menit</td>
+<td>Menjelaskan logika perhitungan dan skenario umum</td>
+<td>memahami dasar asumsi perhitungan besar sampel</td>
+</tr>
+<tr class="odd">
+<td>Latihan kasus</td>
+<td style="text-align: right;">20 menit</td>
+<td>Menerapkan seluruh alur pada topik skripsi</td>
+<td>berlatih menerjemahkan judul menjadi keputusan metode</td>
+</tr>
+<tr class="even">
+<td>Penutup</td>
+<td style="text-align: right;">5 menit</td>
+<td>Merangkum dan memberi checklist kerja</td>
+<td>pulang membawa alat bantu yang operasional</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="apa-yang-harus-sudah-jelas-sebelum-bab-metode-ditulis" class="level1" data-number="6">
+<h1 data-number="6"><span class="header-section-number">6</span> Apa yang Harus Sudah Jelas Sebelum Bab Metode Ditulis</h1>
+<p>Bagian ini penting sekali, karena banyak proposal tampak rapi di permukaan tetapi rapuh di keputusan intinya. Sebelum Bab Metode ditulis, idealnya kalian sudah bisa menjawab tabel berikut.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Komponen yang harus jelas</th>
+<th>Pertanyaan yang harus bisa kalian jawab</th>
+<th>Bentuk minimal yang nanti tertulis di proposal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Pertanyaan penelitian</td>
+<td>Sebenarnya saya ingin mengetahui apa?</td>
+<td>rumusan masalah dan tujuan penelitian</td>
+</tr>
+<tr class="even">
+<td>Desain penelitian</td>
+<td>Saya sedang mendeskripsikan, membandingkan, atau menilai hubungan pada desain apa?</td>
+<td>nama desain + alasan singkat</td>
+</tr>
+<tr class="odd">
+<td>Outcome utama</td>
+<td>Variabel mana yang menjadi hasil utama penelitian saya?</td>
+<td>outcome utama ditulis eksplisit</td>
+</tr>
+<tr class="even">
+<td>Jenis variabel</td>
+<td>Outcome dan paparan saya numerik atau kategorik?</td>
+<td>definisi operasional + skala data</td>
+</tr>
+<tr class="odd">
+<td>Analisis utama</td>
+<td>Uji atau model apa yang paling sesuai?</td>
+<td>analisis data utama</td>
+</tr>
+<tr class="even">
+<td>Pendekatan besar sampel</td>
+<td>Besar sampel saya dihitung untuk outcome apa dan dengan asumsi apa?</td>
+<td>rumus/pendekatan + asumsi</td>
+</tr>
+<tr class="odd">
+<td>Kelayakan etik dan data</td>
+<td>Adakah risiko subjek hilang, data tidak lengkap, atau isu etik yang relevan?</td>
+<td>antisipasi drop-out, etik, dan batas desain</td>
+</tr>
+</tbody>
+</table>
+<p>Kalau salah satu baris ini masih kabur, biasanya proposal kalian belum siap disebut matang secara metodologis.</p>
+</section>
+<section id="benang-merah-dari-pertanyaan-ke-keputusan-analitik" class="level1" data-number="7">
+<h1 data-number="7"><span class="header-section-number">7</span> Benang Merah: dari Pertanyaan ke Keputusan Analitik</h1>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+  A["Pertanyaan penelitian"] --&gt; B["Desain penelitian"]
+  B --&gt; C["Outcome utama"]
+  C --&gt; D["Jenis variabel"]
+  D --&gt; E["Analisis yang sesuai"]
+  E --&gt; F["Interpretasi hasil"]
+  C --&gt; G["Pendekatan besar sampel"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Anggap bagan di atas sebagai kompas utama kalian. Hampir semua kesalahan pada tahap analisis data dan besar sampel muncul karena satu atau lebih langkah di dalam bagan itu dilompati.</p>
+</section>
+<section id="langkah-1-merumuskan-pertanyaan-penelitian" class="level1" data-number="8">
+<h1 data-number="8"><span class="header-section-number">8</span> Langkah 1: Merumuskan Pertanyaan Penelitian</h1>
+<p>Masalah metodologis yang paling mendasar sering kali bukan terletak pada perhitungan, melainkan pada ketidakjelasan pertanyaan penelitian. Karena itu, sebelum bicara tentang uji statistik, kalian perlu lebih dulu menjawab satu pertanyaan sederhana tetapi penting: <em>apa sebenarnya yang ingin kalian ketahui dari penelitian ini?</em></p>
+<section id="empat-bentuk-pertanyaan-yang-paling-sering-muncul" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="empat-bentuk-pertanyaan-yang-paling-sering-muncul"><span class="header-section-number">8.1</span> Empat Bentuk Pertanyaan yang Paling Sering Muncul</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Bentuk pertanyaan</th>
+<th>Rumusan yang lazim muncul</th>
+<th>Konsekuensi analitik</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Deskriptif</td>
+<td>Berapa rerata, median, atau proporsi?</td>
+<td>Membutuhkan statistik deskriptif dan ukuran ketelitian</td>
+</tr>
+<tr class="even">
+<td>Komparatif</td>
+<td>Apakah terdapat perbedaan antar kelompok?</td>
+<td>Membutuhkan uji beda yang sesuai</td>
+</tr>
+<tr class="odd">
+<td>Asosiatif</td>
+<td>Apakah terdapat hubungan antara dua variabel?</td>
+<td>Mengarah ke korelasi atau analisis asosiasi</td>
+</tr>
+<tr class="even">
+<td>Prediktif / faktor terkait</td>
+<td>Faktor apa yang berhubungan dengan outcome?</td>
+<td>Mengarah ke model regresi dasar</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="cara-membaca-judul-skripsi-secara-metodologis" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="cara-membaca-judul-skripsi-secara-metodologis"><span class="header-section-number">8.2</span> Cara Membaca Judul Skripsi secara Metodologis</h2>
+<p>Saat kalian berhadapan dengan judul skripsi, biasakan diri untuk segera menandai:</p>
+<ul>
+<li><strong>outcome utama</strong> yang hendak dijelaskan atau diuji;</li>
+<li>apakah penelitiannya bertujuan <strong>menggambarkan</strong>, <strong>membandingkan</strong>, atau <strong>menghubungkan</strong>;</li>
+<li>apakah data berasal dari <strong>kelompok yang berbeda</strong> atau dari <strong>subjek yang sama</strong>; dan</li>
+<li>apakah ada satu analisis utama yang benar-benar menjadi pusat penelitian.</li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Petunjuk Cepat
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Kata <code>gambaran</code> biasanya mengarah ke analisis deskriptif.</li>
+<li>Kata <code>perbedaan</code> biasanya mengarah ke uji komparatif.</li>
+<li>Kata <code>hubungan</code> menuntut kita memeriksa jenis variabel sebelum memilih analisis.</li>
+<li>Kata <code>faktor yang berhubungan</code> sering menjadi pintu masuk ke regresi sederhana atau multivariat dasar.</li>
+</ul>
+</div>
+</div>
+</section>
+</section>
+<section id="langkah-2-mengenali-desain-dan-variabel" class="level1" data-number="9">
+<h1 data-number="9"><span class="header-section-number">9</span> Langkah 2: Mengenali Desain dan Variabel</h1>
+<p>Banyak salah uji sebenarnya bermula dari salah mengenali desain atau salah mengklasifikasikan variabel. Jadi, sebelum masuk ke wilayah analisis, kalian perlu menata dua hal ini dulu dengan cermat.</p>
+<section id="desain-yang-paling-sering-dijumpai" class="level2" data-number="9.1">
+<h2 data-number="9.1" class="anchored" data-anchor-id="desain-yang-paling-sering-dijumpai"><span class="header-section-number">9.1</span> Desain yang Paling Sering Dijumpai</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Desain</th>
+<th>Ciri umum</th>
+<th>Implikasi</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cross-sectional</td>
+<td>Pengukuran dilakukan pada satu waktu</td>
+<td>Cocok untuk gambaran, perbedaan, dan asosiasi pada saat yang sama</td>
+</tr>
+<tr class="even">
+<td>Pre-post satu kelompok</td>
+<td>Data diambil sebelum dan sesudah pada subjek yang sama</td>
+<td>Analisis harus memperhitungkan pasangan data</td>
+</tr>
+<tr class="odd">
+<td>Case-control sederhana</td>
+<td>Subjek dikelompokkan berdasarkan outcome</td>
+<td>Sering berujung pada odds ratio dan regresi logistik</td>
+</tr>
+<tr class="even">
+<td>Cohort sederhana</td>
+<td>Paparan diikuti untuk melihat outcome</td>
+<td>Baik untuk risiko, tetapi menuntut perencanaan lebih matang</td>
+</tr>
+<tr class="odd">
+<td>Uji intervensi sederhana</td>
+<td>Ada perlakuan yang diberikan</td>
+<td>Bila benar-benar randomized trial, pelaporan perlu mengacu pada CONSORT <span class="citation" data-cites="consort2025">(<a href="#ref-consort2025" role="doc-biblioref">CONSORT Group 2025</a>)</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="jenis-variabel-yang-wajib-dapat-dikenali" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="jenis-variabel-yang-wajib-dapat-dikenali"><span class="header-section-number">9.2</span> Jenis Variabel yang Wajib Dapat Dikenali</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Jenis</th>
+<th>Contoh</th>
+<th>Ringkasan yang lazim dipakai</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Numerik kontinu</td>
+<td>Tekanan darah, kadar Hb, HbA1c</td>
+<td>Mean dan SD, atau median dan IQR</td>
+</tr>
+<tr class="even">
+<td>Numerik diskret</td>
+<td>Jumlah kunjungan, frekuensi episode</td>
+<td>Mean atau median sesuai distribusi</td>
+</tr>
+<tr class="odd">
+<td>Kategorik nominal</td>
+<td>Jenis kelamin, anemia ya/tidak</td>
+<td>Frekuensi dan proporsi</td>
+</tr>
+<tr class="even">
+<td>Kategorik ordinal</td>
+<td>Derajat nyeri, tingkat kepatuhan</td>
+<td>Frekuensi, proporsi, atau pendekatan ordinal</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="mengapa-outcome-utama-harus-jelas" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="mengapa-outcome-utama-harus-jelas"><span class="header-section-number">9.3</span> Mengapa Outcome Utama Harus Jelas</h2>
+<p>Skripsi yang baik hampir selalu memiliki satu outcome utama yang jelas. Outcome inilah yang menentukan:</p>
+<ul>
+<li>apa yang akan dianalisis sebagai fokus utama;</li>
+<li>pendekatan besar sampel yang digunakan;</li>
+<li>bagaimana hasil utama akan ditulis dalam abstrak, hasil, dan pembahasan; serta</li>
+<li>bagaimana peneliti membatasi diri agar penelitian tetap fokus.</li>
+</ul>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Peringatan</span>Catatan Penting
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Kalau outcome utama tidak pernah ditegaskan, analisis utama akan mudah bergeser, besar sampel menjadi kabur, dan fokus skripsi ikut melemah.</p>
+</div>
+</div>
+</section>
+<section id="cara-menerjemahkan-semua-ini-ke-bab-metode" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="cara-menerjemahkan-semua-ini-ke-bab-metode"><span class="header-section-number">9.4</span> Cara Menerjemahkan Semua Ini ke Bab Metode</h2>
+<p>Saat kalian menulis Bab Metode, setidaknya harus tampak jelas bahwa:</p>
+<ul>
+<li>desain penelitian kalian memang konsisten dengan pertanyaan penelitian;</li>
+<li>outcome utama kalian bisa disebut dengan satu kalimat yang tegas;</li>
+<li>semua variabel penting punya definisi operasional yang masuk akal;</li>
+<li>analisis utama kalian tidak berubah-ubah di tengah jalan; dan</li>
+<li>besar sampel memang dihitung untuk menjawab outcome utama itu, bukan sekadar untuk memenuhi formalitas administrasi.</li>
+</ul>
+</section>
+</section>
+<section id="langkah-3-memilih-analisis-data" class="level1" data-number="10">
+<h1 data-number="10"><span class="header-section-number">10</span> Langkah 3: Memilih Analisis Data</h1>
+<section id="prinsip-umum" class="level2" data-number="10.1">
+<h2 data-number="10.1" class="anchored" data-anchor-id="prinsip-umum"><span class="header-section-number">10.1</span> Prinsip Umum</h2>
+<p>Analisis yang baik tidak dipilih karena sering muncul pada output software atau karena pernah dipakai kakak tingkat. Analisis dipilih karena ia adalah jawaban metodologis yang paling tepat untuk pertanyaan penelitian tertentu.</p>
+<p>Secara praktis, biasakan diri kalian untuk selalu memulai dari <strong>tujuan analisis</strong>.</p>
+</section>
+<section id="a.-apabila-tujuan-penelitian-bersifat-deskriptif" class="level2" data-number="10.2">
+<h2 data-number="10.2" class="anchored" data-anchor-id="a.-apabila-tujuan-penelitian-bersifat-deskriptif"><span class="header-section-number">10.2</span> A. Apabila Tujuan Penelitian Bersifat Deskriptif</h2>
+<p>Gunakan ringkasan data yang sesuai dengan bentuk distribusi dan jenis variabel:</p>
+<ul>
+<li><code>mean +/- SD</code> untuk data numerik yang relatif simetris;</li>
+<li><code>median (IQR)</code> untuk data numerik yang menceng atau memiliki outlier kuat; dan</li>
+<li><code>n (%)</code> untuk data kategorik.</li>
+</ul>
+<p>Contoh pertanyaan deskriptif:</p>
+<ul>
+<li>berapa rerata usia responden?</li>
+<li>berapa median lama menderita penyakit?</li>
+<li>berapa proporsi responden dengan anemia?</li>
+</ul>
+</section>
+<section id="b.-apabila-tujuan-penelitian-bersifat-komparatif" class="level2" data-number="10.3">
+<h2 data-number="10.3" class="anchored" data-anchor-id="b.-apabila-tujuan-penelitian-bersifat-komparatif"><span class="header-section-number">10.3</span> B. Apabila Tujuan Penelitian Bersifat Komparatif</h2>
+<p>Pertanyaan kuncinya adalah:</p>
+<ul>
+<li>apakah outcome yang dibandingkan numerik atau kategorik?</li>
+<li>apakah kelompoknya independen atau berpasangan?</li>
+</ul>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situasi</th>
+<th>Analisis yang umum digunakan</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Dua kelompok independen, outcome numerik</td>
+<td>Uji t tidak berpasangan atau Mann-Whitney</td>
+</tr>
+<tr class="even">
+<td>Dua pengukuran pada subjek yang sama, outcome numerik</td>
+<td>Uji t berpasangan atau Wilcoxon signed-rank</td>
+</tr>
+<tr class="odd">
+<td>Dua kelompok, outcome kategorik</td>
+<td>Chi-square atau Fisher exact</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="c.-apabila-tujuan-penelitian-bersifat-asosiatif-atau-prediktif" class="level2" data-number="10.4">
+<h2 data-number="10.4" class="anchored" data-anchor-id="c.-apabila-tujuan-penelitian-bersifat-asosiatif-atau-prediktif"><span class="header-section-number">10.4</span> C. Apabila Tujuan Penelitian Bersifat Asosiatif atau Prediktif</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Situasi</th>
+<th>Analisis yang umum digunakan</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Dua variabel numerik</td>
+<td>Korelasi Pearson atau Spearman</td>
+</tr>
+<tr class="even">
+<td>Outcome numerik dengan satu atau beberapa prediktor</td>
+<td>Regresi linear</td>
+</tr>
+<tr class="odd">
+<td>Outcome kategorik biner dengan satu atau beberapa prediktor</td>
+<td>Regresi logistik</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="matriks-inti-pemilihan-analisis" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="matriks-inti-pemilihan-analisis"><span class="header-section-number">10.5</span> Matriks Inti Pemilihan Analisis</h2>
+<p>Kalau kalian ingin satu tabel yang paling sering dipakai saat menyusun proposal, pakailah tabel ini.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tujuan</th>
+<th>Struktur data</th>
+<th>Pilihan yang paling umum</th>
+<th>Alternatif yang sering dipakai</th>
+<th>Catatan cepat</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Deskriptif</td>
+<td>Outcome numerik relatif simetris</td>
+<td>mean dan SD</td>
+<td>median dan IQR</td>
+<td>Mulai dari deskriptif sebelum melangkah ke uji inferensial</td>
+</tr>
+<tr class="even">
+<td>Deskriptif</td>
+<td>Outcome kategorik</td>
+<td>n (%)</td>
+<td>proporsi dengan CI</td>
+<td>Sangat penting untuk Bab Hasil</td>
+</tr>
+<tr class="odd">
+<td>Komparatif</td>
+<td>Dua kelompok independen, outcome numerik</td>
+<td>Independent t-test</td>
+<td>Mann-Whitney</td>
+<td>Tanyakan: kelompoknya benar-benar independen atau tidak?</td>
+</tr>
+<tr class="even">
+<td>Komparatif</td>
+<td>Dua pengukuran pada subjek yang sama</td>
+<td>Paired t-test</td>
+<td>Wilcoxon signed-rank</td>
+<td>Ini titik salah uji yang paling sering</td>
+</tr>
+<tr class="odd">
+<td>Komparatif</td>
+<td>Lebih dari dua kelompok independen, outcome numerik</td>
+<td>ANOVA</td>
+<td>Kruskal-Wallis</td>
+<td>Sering muncul pada eksperimen sederhana</td>
+</tr>
+<tr class="even">
+<td>Komparatif</td>
+<td>Dua kelompok, outcome kategorik</td>
+<td>Chi-square</td>
+<td>Fisher exact</td>
+<td>Periksa apakah data terlalu jarang untuk chi-square</td>
+</tr>
+<tr class="odd">
+<td>Asosiatif</td>
+<td>Dua variabel numerik</td>
+<td>Pearson</td>
+<td>Spearman</td>
+<td>Pilih sesuai bentuk data dan asumsi</td>
+</tr>
+<tr class="even">
+<td>Prediktif</td>
+<td>Outcome numerik dengan prediktor</td>
+<td>Regresi linear</td>
+<td>-</td>
+<td>Cocok bila outcome utama numerik</td>
+</tr>
+<tr class="odd">
+<td>Prediktif</td>
+<td>Outcome biner dengan prediktor</td>
+<td>Regresi logistik</td>
+<td>-</td>
+<td>Cocok bila outcome utama ya/tidak</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="pohon-keputusan-sederhana" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="pohon-keputusan-sederhana"><span class="header-section-number">10.6</span> Pohon Keputusan Sederhana</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TD
+  A["Apa tujuan penelitian Anda?"] --&gt; B["Deskriptif"]
+  A --&gt; C["Komparatif"]
+  A --&gt; D["Asosiatif / prediktif"]
+  C --&gt; E["Outcome numerik"]
+  C --&gt; F["Outcome kategorik"]
+  E --&gt; G["Kelompok independen -&gt; uji t / Mann-Whitney"]
+  E --&gt; H["Kelompok berpasangan -&gt; paired t / Wilcoxon"]
+  F --&gt; I["Chi-square / Fisher"]
+  D --&gt; J["Dua numerik -&gt; korelasi"]
+  D --&gt; K["Outcome numerik -&gt; regresi linear"]
+  D --&gt; L["Outcome biner -&gt; regresi logistik"]
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</section>
+<section id="parametrik-dan-nonparametrik-apa-yang-perlu-kalian-pahami" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="parametrik-dan-nonparametrik-apa-yang-perlu-kalian-pahami"><span class="header-section-number">10.7</span> Parametrik dan Nonparametrik: Apa yang Perlu Kalian Pahami</h2>
+<p>Di level sarjana, kalian tidak perlu dibebani diskusi yang terlalu teknis. Namun, tetap penting untuk memahami bahwa:</p>
+<ul>
+<li>uji parametrik umumnya lebih efisien bila asumsi cukup terpenuhi;</li>
+<li>uji nonparametrik berguna ketika distribusi data sangat tidak simetris, data bersifat ordinal, atau ukuran sampel kecil membuat asumsi parametrik kurang nyaman; dan</li>
+<li>keputusan tidak boleh hanya bertumpu pada satu angka dari uji normalitas, tetapi perlu dibantu dengan visualisasi data dan akal sehat metodologis.</li>
+</ul>
+</section>
+<section id="tempatkan-uji-normalitas-di-posisi-yang-benar" class="level2" data-number="10.8">
+<h2 data-number="10.8" class="anchored" data-anchor-id="tempatkan-uji-normalitas-di-posisi-yang-benar"><span class="header-section-number">10.8</span> Tempatkan Uji Normalitas di Posisi yang Benar</h2>
+<p>Uji normalitas memang penting, tetapi posisinya harus sehat. Kalian tidak perlu menganggapnya sebagai gerbang tunggal seluruh keputusan statistik. Praktik yang lebih rapi adalah:</p>
+<ul>
+<li>gunakan uji normalitas terutama saat outcome utama kalian numerik dan keputusan parametrik memang bergantung pada bentuk distribusi;</li>
+<li>baca juga histogram, boxplot, atau ringkasan outlier bila memungkinkan;</li>
+<li>jangan menyembah satu angka p-value dari uji normalitas; dan</li>
+<li>pahami bahwa desain, ukuran sampel, dan makna praktis data tetap ikut berbicara.</li>
+</ul>
+<p>Dalam praktik pendidikan kesehatan, <strong>Shapiro-Wilk</strong> sering dipakai sebagai pilihan yang ramah untuk sampel kecil sampai menengah. Namun sekali lagi, ia membantu keputusan; ia bukan satu-satunya sumber keputusan.</p>
+</section>
+<section id="membaca-hasil-dengan-lebih-sehat" class="level2" data-number="10.9">
+<h2 data-number="10.9" class="anchored" data-anchor-id="membaca-hasil-dengan-lebih-sehat"><span class="header-section-number">10.9</span> Membaca Hasil dengan Lebih Sehat</h2>
+<p>Jangan akhiri seluruh diskusi dengan satu kalimat: <code>hasil bermakna karena p &lt; 0,05</code>. Dalam penelitian kesehatan, hasil yang baik perlu dibaca setidaknya melalui tiga lensa:</p>
+<section id="p-value" class="level3" data-number="10.9.1">
+<h3 data-number="10.9.1" class="anchored" data-anchor-id="p-value"><span class="header-section-number">10.9.1</span> 1. P-value</h3>
+<p>P-value membantu menilai seberapa kompatibel data yang diperoleh dengan hipotesis nol. Akan tetapi, p-value <strong>bukan</strong> ukuran besar efek, <strong>bukan</strong> ukuran manfaat klinis, dan <strong>bukan</strong> jaminan kebenaran.</p>
+</section>
+<section id="interval-kepercayaan" class="level3" data-number="10.9.2">
+<h3 data-number="10.9.2" class="anchored" data-anchor-id="interval-kepercayaan"><span class="header-section-number">10.9.2</span> 2. Interval Kepercayaan</h3>
+<p>Interval kepercayaan memberi gambaran mengenai rentang nilai efek yang masih masuk akal. Ini membantu kalian menyadari bahwa hasil penelitian selalu disertai ketidakpastian.</p>
+</section>
+<section id="besar-efek-dan-makna-klinis" class="level3" data-number="10.9.3">
+<h3 data-number="10.9.3" class="anchored" data-anchor-id="besar-efek-dan-makna-klinis"><span class="header-section-number">10.9.3</span> 3. Besar Efek dan Makna Klinis</h3>
+<p>Perbedaan rerata sebesar 1 mmHg yang signifikan secara statistik belum tentu penting secara klinis. Sebaliknya, perbedaan yang cukup besar tetapi tidak signifikan pada sampel kecil belum tentu berarti tidak ada efek; bisa jadi studi tersebut memang kurang bertenaga.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Penting</span>Kaidah Emas Interpretasi
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><code>Signifikan secara statistik</code> tidak otomatis berarti <code>penting secara klinis</code>.<br>
+<code>Tidak signifikan</code> tidak otomatis berarti <code>tidak ada efek</code>.</p>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="langkah-4-memahami-logika-perkiraan-besar-sampel" class="level1" data-number="11">
+<h1 data-number="11"><span class="header-section-number">11</span> Langkah 4: Memahami Logika Perkiraan Besar Sampel</h1>
+<p>Perkiraan besar sampel adalah jembatan antara pertanyaan penelitian dan mutu inferensi. Ia tidak semata-mata menghasilkan angka, melainkan memaksa peneliti untuk menegaskan apa yang dianggap penting, realistis, dan layak dideteksi oleh penelitiannya.</p>
+<section id="lima-komponen-yang-harus-dipahami" class="level2" data-number="11.1">
+<h2 data-number="11.1" class="anchored" data-anchor-id="lima-komponen-yang-harus-dipahami"><span class="header-section-number">11.1</span> Lima Komponen yang Harus Dipahami</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Komponen</th>
+<th>Pertanyaan praktis yang harus dijawab</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Outcome utama</td>
+<td>Variabel apa yang menjadi pusat penelitian?</td>
+</tr>
+<tr class="even">
+<td>Alpha</td>
+<td>Seberapa besar risiko salah positif yang kita terima?</td>
+</tr>
+<tr class="odd">
+<td>Power</td>
+<td>Seberapa besar peluang kita mendeteksi efek bila efek itu benar-benar ada?</td>
+</tr>
+<tr class="even">
+<td>Effect size / delta</td>
+<td>Seberapa besar perbedaan atau hubungan yang masih dianggap penting?</td>
+</tr>
+<tr class="odd">
+<td>Variabilitas / proporsi dasar</td>
+<td>Seberapa besar sebaran data atau proporsi awal yang diperkirakan?</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="intuisi-dasar-yang-harus-ditanamkan" class="level2" data-number="11.2">
+<h2 data-number="11.2" class="anchored" data-anchor-id="intuisi-dasar-yang-harus-ditanamkan"><span class="header-section-number">11.2</span> Intuisi Dasar yang Harus Ditanamkan</h2>
+<ul>
+<li>semakin kecil efek yang ingin dideteksi, semakin besar sampel yang dibutuhkan;</li>
+<li>semakin besar variasi data, semakin besar sampel yang dibutuhkan;</li>
+<li>semakin tinggi power yang diinginkan, semakin besar sampel yang dibutuhkan; dan</li>
+<li>pada desain tertentu, data berpasangan dapat lebih efisien dibanding data independen.</li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Penting</span>Kenapa Besar Sampel Juga Urusan Etik
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Besar sampel yang terlalu kecil membuat penelitian berisiko gagal mendeteksi efek yang penting. Besar sampel yang terlalu besar juga tidak otomatis baik, karena bisa membuat penelitian boros sumber daya, memperpanjang kerja lapangan tanpa alasan kuat, dan pada konteks tertentu menjadi masalah etik. Jadi, besar sampel bukan hanya soal matematika; ia juga soal tanggung jawab ilmiah.</p>
+</div>
+</div>
+</section>
+<section id="skenario-perhitungan-yang-paling-sering-digunakan" class="level2" data-number="11.3">
+<h2 data-number="11.3" class="anchored" data-anchor-id="skenario-perhitungan-yang-paling-sering-digunakan"><span class="header-section-number">11.3</span> Skenario Perhitungan yang Paling Sering Digunakan</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tujuan</th>
+<th>Outcome utama</th>
+<th>Pendekatan umum</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Mendeskripsikan proporsi</td>
+<td>Kategorik</td>
+<td>Estimasi proporsi</td>
+</tr>
+<tr class="even">
+<td>Mendeskripsikan rerata</td>
+<td>Numerik</td>
+<td>Estimasi rerata</td>
+</tr>
+<tr class="odd">
+<td>Membandingkan dua rerata</td>
+<td>Numerik</td>
+<td>Dua mean independen atau paired mean difference</td>
+</tr>
+<tr class="even">
+<td>Membandingkan dua proporsi</td>
+<td>Kategorik</td>
+<td>Dua proporsi independen</td>
+</tr>
+<tr class="odd">
+<td>Menilai hubungan dua variabel numerik</td>
+<td>Numerik</td>
+<td>Perhitungan untuk korelasi</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="peta-besar-sampel-menurut-desain" class="level2" data-number="11.4">
+<h2 data-number="11.4" class="anchored" data-anchor-id="peta-besar-sampel-menurut-desain"><span class="header-section-number">11.4</span> Peta Besar Sampel Menurut Desain</h2>
+<p>Kalau kalian bingung harus mulai dari mana, gunakan tabel ini sebagai peta orientasi.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Desain / tujuan</th>
+<th>Outcome utama</th>
+<th>Informasi minimum yang perlu disiapkan</th>
+<th>Pendekatan yang paling masuk akal</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Cross-sectional deskriptif</td>
+<td>proporsi</td>
+<td>proporsi awal atau asumsi paling konservatif, alpha, presisi</td>
+<td>estimasi proporsi</td>
+</tr>
+<tr class="even">
+<td>Cross-sectional deskriptif</td>
+<td>rerata</td>
+<td>simpangan baku awal, alpha, presisi</td>
+<td>estimasi rerata</td>
+</tr>
+<tr class="odd">
+<td>Dua kelompok independen</td>
+<td>numerik</td>
+<td>delta minimal yang penting, simpangan baku, alpha, power</td>
+<td>dua rerata independen</td>
+</tr>
+<tr class="even">
+<td>Dua kelompok independen</td>
+<td>kategorik</td>
+<td>proporsi tiap kelompok atau besar efek yang diharapkan, alpha, power</td>
+<td>dua proporsi</td>
+</tr>
+<tr class="odd">
+<td>Pre-post pada subjek yang sama</td>
+<td>numerik</td>
+<td>perubahan minimal yang ingin dideteksi, variasi perubahan, alpha, power</td>
+<td>paired mean difference</td>
+</tr>
+<tr class="even">
+<td>Hubungan dua numerik</td>
+<td>numerik</td>
+<td>korelasi minimal yang dianggap bermakna, alpha, power</td>
+<td>korelasi</td>
+</tr>
+<tr class="odd">
+<td>Eksperimen laboratorium sederhana</td>
+<td>tergantung outcome</td>
+<td>jumlah kelompok, outcome utama, kemungkinan kehilangan unit</td>
+<td>desain eksperimen; Federer hanya bila memang dipakai sebagai rule of thumb didaktik</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="formula-dasar-yang-patut-dikenali" class="level2" data-number="11.5">
+<h2 data-number="11.5" class="anchored" data-anchor-id="formula-dasar-yang-patut-dikenali"><span class="header-section-number">11.5</span> Formula Dasar yang Patut Dikenali</h2>
+<p>Untuk <strong>estimasi proporsi</strong>:</p>
+<p><span class="math display">\[
+n = \frac{Z_{\alpha/2}^2 \; p(1-p)}{d^2}
+\]</span></p>
+<p>Untuk <strong>estimasi rerata</strong>:</p>
+<p><span class="math display">\[
+n = \frac{Z_{\alpha/2}^2 \; \sigma^2}{d^2}
+\]</span></p>
+<p>Untuk <strong>dua rerata independen</strong>, kebutuhan per kelompok sering ditulis sebagai:</p>
+<p><span class="math display">\[
+n = \frac{2 \sigma^2 (Z_{\alpha/2} + Z_\beta)^2}{\Delta^2}
+\]</span></p>
+<p>Namun, yang jauh lebih penting daripada mengingat rumus adalah memahami arti simbolnya dan mengetahui kapan rumus tersebut relevan.</p>
+</section>
+<section id="apa-yang-sering-ditanya-pembimbing-saat-membahas-besar-sampel" class="level2" data-number="11.6">
+<h2 data-number="11.6" class="anchored" data-anchor-id="apa-yang-sering-ditanya-pembimbing-saat-membahas-besar-sampel"><span class="header-section-number">11.6</span> Apa yang Sering Ditanya Pembimbing saat Membahas Besar Sampel</h2>
+<p>Kalau kalian datang bimbingan dengan membawa angka besar sampel, bersiaplah untuk menjawab pertanyaan-pertanyaan ini:</p>
+<ol type="1">
+<li>Angka ini dihitung untuk outcome utama yang mana?</li>
+<li>Desain penelitian kalian apa?</li>
+<li>Asumsi proporsi, simpangan baku, atau effect size-nya berasal dari mana?</li>
+<li>Kenapa kalian memilih alpha dan power seperti itu?</li>
+<li>Apakah ada kemungkinan drop-out atau data tidak lengkap?</li>
+<li>Mengapa kalian tidak memakai pendekatan lain?</li>
+</ol>
+<p>Kalau enam pertanyaan ini bisa kalian jawab dengan tenang, biasanya keputusan besar sampel kalian sudah jauh lebih kokoh.</p>
+</section>
+<section id="empat-pertanyaan-sebelum-menghitung-besar-sampel" class="level2" data-number="11.7">
+<h2 data-number="11.7" class="anchored" data-anchor-id="empat-pertanyaan-sebelum-menghitung-besar-sampel"><span class="header-section-number">11.7</span> Empat Pertanyaan sebelum Menghitung Besar Sampel</h2>
+<ol type="1">
+<li>Outcome utama saya apa?</li>
+<li>Desain penelitian saya apa?</li>
+<li>Perbedaan atau hubungan sekecil apa yang masih saya anggap penting?</li>
+<li>Dari mana asumsi saya diperoleh: literatur, studi pendahuluan, atau pertimbangan klinis?</li>
+</ol>
+</section>
+<section id="tiga-pola-besar-sampel-yang-paling-praktis-buat-kalian" class="level2" data-number="11.8">
+<h2 data-number="11.8" class="anchored" data-anchor-id="tiga-pola-besar-sampel-yang-paling-praktis-buat-kalian"><span class="header-section-number">11.8</span> Tiga Pola Besar Sampel yang Paling Praktis Buat Kalian</h2>
+<p>Di level sarjana, biasanya jauh lebih efektif kalau kalian mengenali pola besar sampel yang paling sering muncul, daripada dibebani seluruh variasi formula sejak awal.</p>
+<section id="penelitian-observasional-deskriptif-atau-survei" class="level3" data-number="11.8.1">
+<h3 data-number="11.8.1" class="anchored" data-anchor-id="penelitian-observasional-deskriptif-atau-survei"><span class="header-section-number">11.8.1</span> 1. Penelitian observasional deskriptif atau survei</h3>
+<p>Biasanya berangkat dari estimasi proporsi atau rerata. Pada konteks ini, pendekatan seperti proporsi tunggal atau rerata tunggal jauh lebih masuk akal daripada memakai rumus umum yang tidak mempertimbangkan outcome penelitian.</p>
+</section>
+<section id="penelitian-analitik-sederhana" class="level3" data-number="11.8.2">
+<h3 data-number="11.8.2" class="anchored" data-anchor-id="penelitian-analitik-sederhana"><span class="header-section-number">11.8.2</span> 2. Penelitian analitik sederhana</h3>
+<p>Bila pertanyaannya membandingkan dua kelompok atau menilai hubungan, maka perhitungan besar sampel sebaiknya mengikuti besar efek yang diharapkan pada perbedaan rerata, perbedaan proporsi, atau kekuatan korelasi.</p>
+</section>
+<section id="penelitian-eksperimental-laboratorium-sederhana" class="level3" data-number="11.8.3">
+<h3 data-number="11.8.3" class="anchored" data-anchor-id="penelitian-eksperimental-laboratorium-sederhana"><span class="header-section-number">11.8.3</span> 3. Penelitian eksperimental laboratorium sederhana</h3>
+<p>Pada sebagian penelitian hewan coba atau eksperimen laboratorium dengan rancangan sederhana, kalian mungkin akan menemukan aturan Federer. Di kelas, aturan ini boleh dikenalkan sebagai jalan pintas didaktik, tetapi tetap harus ditekankan bahwa ia adalah <strong>rule of thumb</strong>, bukan pengganti semua pertimbangan desain eksperimen.</p>
+</section>
+</section>
+<section id="tentang-tambahan-drop-out" class="level2" data-number="11.9">
+<h2 data-number="11.9" class="anchored" data-anchor-id="tentang-tambahan-drop-out"><span class="header-section-number">11.9</span> Tentang Tambahan Drop-out</h2>
+<p>Penambahan 10 sampai 20 persen di atas hasil perhitungan besar sampel dapat menjadi praktik yang wajar <strong>bila</strong> memang ada potensi subjek hilang, nonresponse, data rusak, atau kegagalan tindak lanjut. Penambahan ini bukan kewajiban mekanis pada semua desain, tetapi keputusan antisipatif yang harus dijelaskan dengan jujur.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Praktik yang Aman Buat Kalian
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Tambahkan antisipasi <code>drop-out</code> bila ada kemungkinan kehilangan subjek atau data tidak lengkap.<br>
+Untuk desain yang lebih kompleks seperti cluster sampling, survival analysis, atau model multivariat yang menuntut perencanaan khusus, konsultasi statistik sebaiknya dilakukan lebih dini.</p>
+</div>
+</div>
+</section>
+</section>
+<section id="contoh-penerapan-pada-topik-skripsi" class="level1" data-number="12">
+<h1 data-number="12"><span class="header-section-number">12</span> Contoh Penerapan pada Topik Skripsi</h1>
+<section id="contoh-1-hubungan-durasi-tidur-dengan-tekanan-darah-sistolik" class="level2" data-number="12.1">
+<h2 data-number="12.1" class="anchored" data-anchor-id="contoh-1-hubungan-durasi-tidur-dengan-tekanan-darah-sistolik"><span class="header-section-number">12.1</span> Contoh 1: Hubungan Durasi Tidur dengan Tekanan Darah Sistolik</h2>
+<p><strong>Judul</strong><br>
+Hubungan durasi tidur dengan tekanan darah sistolik pada mahasiswa koas.</p>
+<p><strong>Pembacaan metodologis</strong></p>
+<ul>
+<li>pertanyaan penelitian: apakah terdapat hubungan?</li>
+<li>desain: cross-sectional</li>
+<li>outcome utama: tekanan darah sistolik</li>
+<li>jenis variabel: numerik dan numerik</li>
+<li>analisis utama: korelasi Pearson atau Spearman</li>
+<li>pendekatan besar sampel: korelasi</li>
+</ul>
+<p><strong>Yang perlu kalian tangkap</strong><br>
+Contoh ini sangat baik untuk menegaskan bahwa kata <code>hubungan</code> tidak otomatis berarti chi-square. Jenis variabel tetap harus diperiksa terlebih dahulu.</p>
+</section>
+<section id="contoh-2-perbedaan-proporsi-anemia-pada-remaja-putri-urban-dan-rural" class="level2" data-number="12.2">
+<h2 data-number="12.2" class="anchored" data-anchor-id="contoh-2-perbedaan-proporsi-anemia-pada-remaja-putri-urban-dan-rural"><span class="header-section-number">12.2</span> Contoh 2: Perbedaan Proporsi Anemia pada Remaja Putri Urban dan Rural</h2>
+<p><strong>Judul</strong><br>
+Perbedaan proporsi anemia pada remaja putri di wilayah urban dan rural.</p>
+<p><strong>Pembacaan metodologis</strong></p>
+<ul>
+<li>pertanyaan penelitian: apakah proporsinya berbeda?</li>
+<li>desain: cross-sectional komparatif</li>
+<li>outcome utama: anemia ya/tidak</li>
+<li>analisis utama: chi-square atau Fisher exact</li>
+<li>pendekatan besar sampel: dua proporsi independen</li>
+</ul>
+<p><strong>Yang perlu kalian tangkap</strong><br>
+Contoh ini baik untuk menanamkan bahwa outcome kategorik biasanya berujung pada proporsi, asosiasi kategorik, odds ratio, atau model logistik sederhana.</p>
+</section>
+<section id="contoh-3-perubahan-tekanan-darah-sebelum-dan-sesudah-edukasi-gaya-hidup" class="level2" data-number="12.3">
+<h2 data-number="12.3" class="anchored" data-anchor-id="contoh-3-perubahan-tekanan-darah-sebelum-dan-sesudah-edukasi-gaya-hidup"><span class="header-section-number">12.3</span> Contoh 3: Perubahan Tekanan Darah sebelum dan Sesudah Edukasi Gaya Hidup</h2>
+<p><strong>Judul</strong><br>
+Perubahan tekanan darah sebelum dan sesudah edukasi gaya hidup.</p>
+<p><strong>Pembacaan metodologis</strong></p>
+<ul>
+<li>pertanyaan penelitian: apakah terdapat perubahan pada subjek yang sama?</li>
+<li>desain: pre-post satu kelompok</li>
+<li>outcome utama: tekanan darah</li>
+<li>analisis utama: uji t berpasangan atau Wilcoxon signed-rank</li>
+<li>pendekatan besar sampel: paired mean difference</li>
+</ul>
+<p><strong>Yang perlu kalian tangkap</strong><br>
+Data sebelum-sesudah pada orang yang sama tidak boleh dianalisis sebagai dua kelompok independen.</p>
+</section>
+</section>
+<section id="kekeliruan-yang-paling-sering-ditemukan" class="level1" data-number="13">
+<h1 data-number="13"><span class="header-section-number">13</span> Kekeliruan yang Paling Sering Ditemukan</h1>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Kekeliruan</th>
+<th>Dampak</th>
+<th>Koreksi yang perlu diajarkan</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Memilih uji dari contoh skripsi lain tanpa memeriksa desain</td>
+<td>Analisis menjadi tidak tepat</td>
+<td>Selalu kembali ke pertanyaan, desain, dan jenis variabel</td>
+</tr>
+<tr class="even">
+<td>Tidak membedakan data independen dan berpasangan</td>
+<td>Kesimpulan dapat bias</td>
+<td>Tanyakan apakah observasi berasal dari subjek yang sama</td>
+</tr>
+<tr class="odd">
+<td>Menuliskan p-value saja</td>
+<td>Pembahasan menjadi dangkal</td>
+<td>Laporkan juga besar efek dan interval kepercayaan</td>
+</tr>
+<tr class="even">
+<td>Menghitung besar sampel tanpa outcome utama</td>
+<td>Dasar proposal rapuh</td>
+<td>Tegaskan outcome utama terlebih dahulu</td>
+</tr>
+<tr class="odd">
+<td>Terlalu banyak variabel ingin dijadikan fokus utama</td>
+<td>Skripsi kehilangan arah</td>
+<td>Pisahkan outcome utama, paparan, dan kovariat</td>
+</tr>
+<tr class="even">
+<td>Mengandalkan software tanpa logika</td>
+<td>Sulit mempertahankan analisis saat seminar</td>
+<td>Tentukan analisis di atas kertas terlebih dahulu</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="pakai-software-tanpa-kehilangan-arah" class="level1" data-number="14">
+<h1 data-number="14"><span class="header-section-number">14</span> Pakai Software tanpa Kehilangan Arah</h1>
+<p>Software statistik perlu ditempatkan sebagai alat bantu, bukan sebagai sumber keputusan. Karena itu, urutan kerja yang sehat buat kalian adalah:</p>
+<ol type="1">
+<li>menuliskan pertanyaan penelitian;</li>
+<li>menetapkan outcome utama;</li>
+<li>mengenali desain penelitian;</li>
+<li>mengklasifikasikan jenis variabel;</li>
+<li>memilih analisis utama secara manual;</li>
+<li>baru menjalankan software; dan</li>
+<li>menuliskan interpretasi dengan bahasa penelitian, bukan dengan bahasa menu program.</li>
+</ol>
+<section id="alat-yang-paling-relevan-untuk-kalian" class="level2" data-number="14.1">
+<h2 data-number="14.1" class="anchored" data-anchor-id="alat-yang-paling-relevan-untuk-kalian"><span class="header-section-number">14.1</span> Alat yang Paling Relevan untuk Kalian</h2>
+<ul>
+<li><code>OpenEpi</code> sangat berguna sebagai kalkulator epidemiologi berbasis web untuk berbagai skenario besar sampel dan analisis dasar <span class="citation" data-cites="openepi2026">(<a href="#ref-openepi2026" role="doc-biblioref">OpenEpi 2026</a>)</span></li>
+<li><code>G*Power</code> tetap berguna untuk pembelajaran dasar power analysis dan effect size, terutama pada desain yang umum di pendidikan kesehatan <span class="citation" data-cites="gpower2026">(<a href="#ref-gpower2026" role="doc-biblioref">Heinrich-Heine-Universität Düsseldorf 2026</a>)</span></li>
+<li><code>jamovi</code> layak diperkenalkan karena antarmukanya ramah, berbasis R, dan menghasilkan output yang rapi untuk pembelajaran, walaupun hasil akhirnya tetap perlu diperiksa dan disesuaikan dengan gaya penulisan target <span class="citation" data-cites="jamovi2026">(<a href="#ref-jamovi2026" role="doc-biblioref">The jamovi project 2026</a>)</span></li>
+<li><code>JASP</code> juga patut dikenali sebagai alat analisis yang relatif ramah untuk pembelajaran statistik terapan</li>
+<li><code>Epi Info</code> dapat membantu pada konteks kesehatan masyarakat tertentu</li>
+</ul>
+<p>Untuk kebutuhan kelas ini, kalian tidak perlu pindah ke bahasa pemrograman dulu. Yang lebih penting adalah punya urutan berpikir yang benar. Folder <a href="scripts/sample_size_helpers.R">sample_size_helpers.R</a> tetap tersedia sebagai pendamping latihan bila nanti kalian ingin melihat contoh komputasi yang lebih terstruktur.</p>
+</section>
+<section id="alur-praktis-yang-paling-aman-buat-kalian" class="level2" data-number="14.2">
+<h2 data-number="14.2" class="anchored" data-anchor-id="alur-praktis-yang-paling-aman-buat-kalian"><span class="header-section-number">14.2</span> Alur Praktis yang Paling Aman Buat Kalian</h2>
+<p>Untuk level S1 kedokteran, alur berikut biasanya paling aman:</p>
+<ol type="1">
+<li>Tentukan pertanyaan penelitian dan outcome utama.</li>
+<li>Pilih desain serta analisis utama di atas kertas.</li>
+<li>Tentukan asumsi besar sampel dari literatur atau studi pendahuluan.</li>
+<li>Gunakan alat bantu seperti OpenEpi, G*Power, atau software lain yang sesuai.</li>
+<li>Tulis kembali keputusan tersebut dalam bahasa metodologi yang jernih, bukan hanya menempel angka hasil kalkulator.</li>
+</ol>
+</section>
+</section>
+<section id="supaya-hasil-kalian-tertulis-rapi" class="level1" data-number="15">
+<h1 data-number="15"><span class="header-section-number">15</span> Supaya Hasil Kalian Tertulis Rapi</h1>
+<p>Selain memilih analisis yang tepat, kalian juga perlu membiasakan diri melaporkan hasil secara tertib. Untuk studi observasional, kerangka <strong>STROBE</strong> sangat membantu membangun kebiasaan pelaporan yang lebih lengkap <span class="citation" data-cites="vandenbroucke2007strobe equator2026strobe">(<a href="#ref-vandenbroucke2007strobe" role="doc-biblioref"><span class="nocase">Vandenbroucke dkk.</span> 2007</a>; <a href="#ref-equator2026strobe" role="doc-biblioref">EQUATOR Network 2026</a>)</span>. Untuk aspek statistik, prinsip <strong>SAMPL</strong> mendorong peneliti agar tidak berhenti pada laporan p-value semata, tetapi juga memberi informasi yang cukup tentang metode dan hasil analisis <span class="citation" data-cites="lang2015sampl">(<a href="#ref-lang2015sampl" role="doc-biblioref">Lang dan Altman 2015</a>)</span>. Pada desain uji acak terkontrol, pelaporan yang baik perlu mengacu pada <strong>CONSORT 2025</strong> <span class="citation" data-cites="consort2025">(<a href="#ref-consort2025" role="doc-biblioref">CONSORT Group 2025</a>)</span>.</p>
+<section id="tiga-kebiasaan-pelaporan-yang-layak-ditanamkan" class="level2" data-number="15.1">
+<h2 data-number="15.1" class="anchored" data-anchor-id="tiga-kebiasaan-pelaporan-yang-layak-ditanamkan"><span class="header-section-number">15.1</span> Tiga Kebiasaan Pelaporan yang Layak Ditanamkan</h2>
+<ul>
+<li>selalu menyebutkan outcome utama dan analisis utamanya;</li>
+<li>selalu melaporkan ukuran efek dan ketidakpastian, bukan hanya kebermaknaan statistik; dan</li>
+<li>selalu menjelaskan dasar asumsi yang dipakai dalam perhitungan besar sampel.</li>
+</ul>
+</section>
+</section>
+<section id="latihan-yang-bisa-kalian-pakai" class="level1" data-number="16">
+<h1 data-number="16"><span class="header-section-number">16</span> Latihan yang Bisa Kalian Pakai</h1>
+<section id="aktivitas-1-bedah-judul-skripsi" class="level2" data-number="16.1">
+<h2 data-number="16.1" class="anchored" data-anchor-id="aktivitas-1-bedah-judul-skripsi"><span class="header-section-number">16.1</span> Aktivitas 1: Bedah Judul Skripsi</h2>
+<p>Berikan 3 sampai 5 judul skripsi yang dekat dengan dunia kedokteran. Minta kalian mengisi tabel singkat berikut:</p>
+<ul>
+<li>pertanyaan penelitian;</li>
+<li>desain penelitian;</li>
+<li>outcome utama;</li>
+<li>jenis outcome;</li>
+<li>analisis utama; dan</li>
+<li>pendekatan besar sampel.</li>
+</ul>
+</section>
+<section id="aktivitas-2-tebak-keluarga-analisis" class="level2" data-number="16.2">
+<h2 data-number="16.2" class="anchored" data-anchor-id="aktivitas-2-tebak-keluarga-analisis"><span class="header-section-number">16.2</span> Aktivitas 2: Tebak Keluarga Analisis</h2>
+<p>Tampilkan beberapa skenario sederhana, misalnya:</p>
+<ul>
+<li>dua kelompok independen dengan outcome numerik;</li>
+<li>dua pengukuran pada subjek yang sama;</li>
+<li>dua kelompok dengan outcome kategorik; dan</li>
+<li>dua variabel numerik yang ingin dinilai hubungannya.</li>
+</ul>
+<p>Tugas kalian bukan menyebut seluruh detail uji, melainkan menentukan keluarga analisis yang paling tepat.</p>
+</section>
+<section id="aktivitas-3-membaca-output-secara-kritis" class="level2" data-number="16.3">
+<h2 data-number="16.3" class="anchored" data-anchor-id="aktivitas-3-membaca-output-secara-kritis"><span class="header-section-number">16.3</span> Aktivitas 3: Membaca Output secara Kritis</h2>
+<p>Tampilkan output sederhana dari software, lalu minta kalian menjawab:</p>
+<ul>
+<li>di mana ukuran efeknya?</li>
+<li>di mana p-valuenya?</li>
+<li>apa makna klinis dari hasil itu?</li>
+<li>adakah kesimpulan penulis yang terlalu jauh dibandingkan desain penelitiannya?</li>
+</ul>
+</section>
+</section>
+<section id="bank-kasus-mini-untuk-slide-dan-soal" class="level1" data-number="17">
+<h1 data-number="17"><span class="header-section-number">17</span> Bank Kasus Mini untuk Slide dan Soal</h1>
+<p>Bagian ini sengaja saya tulis lebih terstruktur supaya mudah diturunkan lagi menjadi slide, kuis, atau soal latihan.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Topik</th>
+<th>Desain</th>
+<th>Outcome utama</th>
+<th>Jenis outcome</th>
+<th>Analisis utama</th>
+<th>Pendekatan besar sampel</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Hubungan durasi tidur dengan tekanan darah pada mahasiswa koas</td>
+<td>Cross-sectional</td>
+<td>Tekanan darah sistolik</td>
+<td>Numerik</td>
+<td>Korelasi / regresi linear sederhana</td>
+<td>Korelasi</td>
+</tr>
+<tr class="even">
+<td>Perbedaan kadar Hb antara mahasiswa dengan dan tanpa kebiasaan sarapan</td>
+<td>Cross-sectional komparatif</td>
+<td>Kadar Hb</td>
+<td>Numerik</td>
+<td>Uji t tidak berpasangan / Mann-Whitney</td>
+<td>Dua rerata independen</td>
+</tr>
+<tr class="odd">
+<td>Hubungan obesitas dengan kejadian prehipertensi</td>
+<td>Cross-sectional</td>
+<td>Prehipertensi</td>
+<td>Kategorik</td>
+<td>Chi-square / regresi logistik sederhana</td>
+<td>Dua proporsi</td>
+</tr>
+<tr class="even">
+<td>Perubahan tekanan darah sebelum dan sesudah edukasi gaya hidup</td>
+<td>Pre-post satu kelompok</td>
+<td>Tekanan darah</td>
+<td>Numerik</td>
+<td>Uji t berpasangan / Wilcoxon signed-rank</td>
+<td>Paired mean difference</td>
+</tr>
+<tr class="odd">
+<td>Faktor yang berhubungan dengan kepatuhan minum obat pada pasien hipertensi</td>
+<td>Cross-sectional analitik</td>
+<td>Kepatuhan</td>
+<td>Kategorik</td>
+<td>Chi-square + regresi logistik</td>
+<td>Proporsi / model multivariat</td>
+</tr>
+<tr class="even">
+<td>Hubungan kadar HbA1c dengan lama menderita DM</td>
+<td>Cross-sectional</td>
+<td>HbA1c</td>
+<td>Numerik</td>
+<td>Korelasi Pearson / Spearman</td>
+<td>Korelasi</td>
+</tr>
+<tr class="odd">
+<td>Perbedaan proporsi anemia pada remaja putri urban vs rural</td>
+<td>Cross-sectional komparatif</td>
+<td>Anemia</td>
+<td>Kategorik</td>
+<td>Chi-square / Fisher exact</td>
+<td>Dua proporsi</td>
+</tr>
+<tr class="even">
+<td>Akurasi skor skrining sederhana terhadap diagnosis depresi</td>
+<td>Studi diagnostik sederhana</td>
+<td>Diagnosis depresi</td>
+<td>Kategorik</td>
+<td>Sensitivitas, spesifisitas, ROC dasar</td>
+<td>Presisi parameter diagnostik</td>
+</tr>
+</tbody>
+</table>
+<p>Kalau nanti handout ini dipakai untuk membuat soal, tabel ini bisa dipakai sebagai bank skenario. Soal tinggal memotong satu atau dua kolom lalu meminta kalian melengkapi sisanya.</p>
+</section>
+<section id="checklist-untuk-proposal-dan-skripsi" class="level1" data-number="18">
+<h1 data-number="18"><span class="header-section-number">18</span> Checklist untuk Proposal dan Skripsi</h1>
+<p>Pada versi HTML, daftar ini dapat dicentang dan browser akan menyimpan progres pada perangkat yang sama. Anggap ini sebagai alat kerja pribadi saat kalian menyiapkan proposal, menulis hasil, dan meninjau pembahasan.</p>
+<section id="sebelum-proposal-diajukan" class="level2" data-number="18.1">
+<h2 data-number="18.1" class="anchored" data-anchor-id="sebelum-proposal-diajukan"><span class="header-section-number">18.1</span> Sebelum Proposal Diajukan</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Apakah pertanyaan penelitian saya jelas dan spesifik?</label></li>
+<li><label><input type="checkbox">Apakah outcome utama saya telah ditetapkan?</label></li>
+<li><label><input type="checkbox">Apakah desain penelitian saya konsisten dengan pertanyaan penelitian?</label></li>
+<li><label><input type="checkbox">Apakah jenis variabel saya telah diklasifikasikan dengan benar?</label></li>
+<li><label><input type="checkbox">Apakah analisis utama saya benar-benar sesuai?</label></li>
+<li><label><input type="checkbox">Apakah besar sampel saya dihitung berdasarkan outcome utama?</label></li>
+<li><label><input type="checkbox">Apakah asumsi perhitungan saya memiliki dasar yang jelas?</label></li>
+</ul>
+</section>
+<section id="saat-menulis-bab-hasil" class="level2" data-number="18.2">
+<h2 data-number="18.2" class="anchored" data-anchor-id="saat-menulis-bab-hasil"><span class="header-section-number">18.2</span> Saat Menulis Bab Hasil</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Apakah statistik deskriptif saya sesuai dengan jenis variabel?</label></li>
+<li><label><input type="checkbox">Apakah saya melaporkan ukuran efek, bukan hanya p-value?</label></li>
+<li><label><input type="checkbox">Apakah interval kepercayaan perlu saya tampilkan?</label></li>
+<li><label><input type="checkbox">Apakah tabel yang saya buat menjawab pertanyaan penelitian?</label></li>
+</ul>
+</section>
+<section id="saat-menulis-pembahasan" class="level2" data-number="18.3">
+<h2 data-number="18.3" class="anchored" data-anchor-id="saat-menulis-pembahasan"><span class="header-section-number">18.3</span> Saat Menulis Pembahasan</h2>
+<ul class="task-list">
+<li><label><input type="checkbox">Apakah saya membedakan signifikansi statistik dan makna klinis?</label></li>
+<li><label><input type="checkbox">Apakah saya jujur mengenai keterbatasan desain?</label></li>
+<li><label><input type="checkbox">Apakah saya menghindari klaim kausal bila desain saya observasional?</label></li>
+</ul>
+</section>
+</section>
+<section id="penutup" class="level1" data-number="19">
+<h1 data-number="19"><span class="header-section-number">19</span> Penutup</h1>
+<p>Pada akhirnya, analisis data dan perkiraan besar sampel paling bermanfaat bila kalian pakai sebagai <strong>alat navigasi ilmiah</strong>. Kalian tidak perlu keluar dari kelas ini sebagai ahli statistik. Yang kalian perlukan adalah kompas metodologis yang lebih jernih:</p>
+<ul>
+<li>mulai dari pertanyaan penelitian;</li>
+<li>menegaskan desain dan outcome utama;</li>
+<li>memilih analisis yang paling sesuai;</li>
+<li>menghitung besar sampel dengan alasan yang jelas; dan</li>
+<li>menafsirkan hasil secara hati-hati, proporsional, dan ilmiah.</li>
+</ul>
+<p>Bila kebiasaan berpikir ini tertanam, kalian akan jauh lebih siap menghadapi penyusunan proposal, pengumpulan data, analisis hasil, hingga seminar skripsi.</p>
+</section>
+<section id="referensi" class="level1" data-number="20">
+<h1 data-number="20"><span class="header-section-number">20</span> Referensi</h1>
+<div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="ref-asa2016gaise" class="csl-entry" role="listitem">
+American Statistical Association. 2016. <em>Guidelines for Assessment and Instruction in Statistics Education (GAISE) College Report</em>. <a href="https://www.amstat.org/education/guidelines-for-assessment-and-instruction-in-statistics-education-(gaise)-reports">https://www.amstat.org/education/guidelines-for-assessment-and-instruction-in-statistics-education-(gaise)-reports</a>.
+</div>
+<div id="ref-consort2025" class="csl-entry" role="listitem">
+CONSORT Group. 2025. <span>“CONSORT 2025 Statement: Updated Guideline for Reporting Randomized Trials.”</span> <em>JAMA</em> 333 (22): 1998–2005. <a href="https://doi.org/10.1001/jama.2025.4347">https://doi.org/10.1001/jama.2025.4347</a>.
+</div>
+<div id="ref-equator2026strobe" class="csl-entry" role="listitem">
+EQUATOR Network. 2026. <em>STROBE: Strengthening the Reporting of Observational Studies in Epidemiology</em>. <a href="https://www.equator-network.org/reporting-guidelines/strobe/">https://www.equator-network.org/reporting-guidelines/strobe/</a>.
+</div>
+<div id="ref-fkusk2024guide" class="csl-entry" role="listitem">
+Fakultas Kedokteran Universitas Syiah Kuala. 2024. <em>Academic Guide for Medical Doctor Profession Study Program</em>. <a href="https://fk.usk.ac.id/assets/file/academic-guide-for-medical-doctor-profession-study-program.pdf">https://fk.usk.ac.id/assets/file/academic-guide-for-medical-doctor-profession-study-program.pdf</a>.
+</div>
+<div id="ref-gpower2026" class="csl-entry" role="listitem">
+Heinrich-Heine-Universität Düsseldorf. 2026. <em>G*Power: Statistical Power Analyses for Mac and Windows</em>. <a href="https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower">https://www.psychologie.hhu.de/arbeitsgruppen/allgemeine-psychologie-und-arbeitspsychologie/gpower</a>.
+</div>
+<div id="ref-lang2015sampl" class="csl-entry" role="listitem">
+Lang, Thomas A., dan Douglas G. Altman. 2015. <span>“Basic Statistical Reporting for Articles Published in Biomedical Journals: The <span>‘Statistical Analyses and Methods in the Published Literature’</span> or the SAMPL Guidelines.”</span> <em>International Journal of Nursing Studies</em> 52 (1): 5–9. <a href="https://doi.org/10.1016/j.ijnurstu.2014.09.006">https://doi.org/10.1016/j.ijnurstu.2014.09.006</a>.
+</div>
+<div id="ref-jiang2021teaching" class="csl-entry" role="listitem">
+Lee, Gabriel Sheng Jie, Yip Han Chin, Aimei Amy Jiang, dkk. 2021. <span>“Teaching Medical Research to Medical Students: a Systematic Review.”</span> <em>Medical Science Educator</em>, advance online publication. <a href="https://doi.org/10.1007/s40670-020-01183-w">https://doi.org/10.1007/s40670-020-01183-w</a>.
+</div>
+<div id="ref-openepi2026" class="csl-entry" role="listitem">
+OpenEpi. 2026. <em>Open Source Epidemiologic Statistics for Public Health</em>. <a href="https://www.openepi.com/Menu/OE_Menu.htm">https://www.openepi.com/Menu/OE_Menu.htm</a>.
+</div>
+<div id="ref-undana2023cpl" class="csl-entry" role="listitem">
+Program Studi Pendidikan Dokter FK Universitas Nusa Cendana. 2023. <em>Capaian Pembelajaran (CPL)</em>. <a href="https://kedokteran.undana.ac.id/capaian-pembelajaran-cpl-2/">https://kedokteran.undana.ac.id/capaian-pembelajaran-cpl-2/</a>.
+</div>
+<div id="ref-jamovi2026" class="csl-entry" role="listitem">
+The jamovi project. 2026. <em>jamovi User Guide</em>. <a href="https://www.jamovi.org/user-manual.html">https://www.jamovi.org/user-manual.html</a>.
+</div>
+<div id="ref-vandenbroucke2007strobe" class="csl-entry" role="listitem">
+<span class="nocase">Vandenbroucke, Jan P., Erik von Elm, Douglas G. Altman, dkk.</span> 2007. <span>“Strengthening the Reporting of Observational Studies in Epidemiology (STROBE) Statement: Guidelines for Reporting Observational Studies.”</span> <em>BMJ</em> 335 (7624): 806–8. <a href="https://doi.org/10.1136/bmj.39335.541782.AD">https://doi.org/10.1136/bmj.39335.541782.AD</a>.
+</div>
+<div id="ref-ciarlo2025ebm" class="csl-entry" role="listitem">
+Wallerstedt, Susanna M., Martin Garwicz, Pontus Henriksson, dkk. 2025. <span>“Preparing Medical Students to Incorporate Scientific Evidence into Patient Care: A Cross-Sectional Study.”</span> <em>PLOS ONE</em> 20 (4). <a href="https://doi.org/10.1371/journal.pone.0321211">https://doi.org/10.1371/journal.pone.0321211</a>.
+</div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script>
+const initBiostatHandout = function () {
+  const root = document.documentElement;
+  const progressBar = document.createElement("div");
+  progressBar.id = "reading-progress";
+  document.body.appendChild(progressBar);
+
+  const updateProgress = function () {
+    const maxScroll = root.scrollHeight - root.clientHeight;
+    const ratio = maxScroll > 0 ? window.scrollY / maxScroll : 0;
+    progressBar.style.transform = "scaleX(" + Math.min(Math.max(ratio, 0), 1) + ")";
+  };
+
+  updateProgress();
+  window.addEventListener("scroll", updateProgress, { passive: true });
+  window.addEventListener("resize", updateProgress);
+
+  const content = document.querySelector("main.content");
+  const titleBlock = document.getElementById("title-block-header");
+  const toc = document.querySelector("#TOC");
+
+  if (content && toc && !content.querySelector(".mobile-toc")) {
+    const mobileToc = document.createElement("div");
+    mobileToc.className = "mobile-toc";
+    mobileToc.innerHTML =
+      '<details><summary>Lompat ke bagian tertentu</summary><nav aria-label="Daftar isi mobile"></nav></details>';
+
+    const list = toc.querySelector("ul");
+    const nav = mobileToc.querySelector("nav");
+    if (list && nav) {
+      nav.appendChild(list.cloneNode(true));
+      if (titleBlock) {
+        titleBlock.insertAdjacentElement("afterend", mobileToc);
+      } else {
+        content.prepend(mobileToc);
+      }
+    }
+  }
+
+  document.querySelectorAll("main.content table").forEach(function (table) {
+    if (table.parentElement && table.parentElement.classList.contains("table-scroll")) {
+      return;
+    }
+
+    const wrapper = document.createElement("div");
+    wrapper.className = "table-scroll";
+    table.parentNode.insertBefore(wrapper, table);
+    wrapper.appendChild(table);
+  });
+
+  const checklistItems = Array.from(document.querySelectorAll("main.content ul.task-list li"));
+  if (!checklistItems.length) {
+    return;
+  }
+
+  const checklistSection = document.getElementById("checklist-untuk-proposal-dan-skripsi");
+  let summary = checklistSection ? checklistSection.querySelector(".checklist-summary") : null;
+
+  if (!summary && checklistSection) {
+    summary = document.createElement("p");
+    summary.className = "checklist-summary";
+
+    const anchor = checklistSection.querySelector("p");
+    if (anchor) {
+      anchor.insertAdjacentElement("afterend", summary);
+    } else {
+      const heading = checklistSection.querySelector("h1, h2");
+      if (heading) {
+        heading.insertAdjacentElement("afterend", summary);
+      } else {
+        checklistSection.prepend(summary);
+      }
+    }
+  }
+
+  const storageAvailable = (function () {
+    try {
+      const probeKey = "__biostat_handout_probe__";
+      window.localStorage.setItem(probeKey, "1");
+      window.localStorage.removeItem(probeKey);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  })();
+
+  const slugify = function (text) {
+    return text
+      .toLowerCase()
+      .trim()
+      .replace(/\s+/g, " ")
+      .replace(/[^a-z0-9\u00c0-\u024f]+/g, "-")
+      .replace(/^-+|-+$/g, "")
+      .slice(0, 80);
+  };
+
+  const updateChecklistSummary = function () {
+    if (!summary) {
+      return;
+    }
+
+    const total = checklistItems.length;
+    const done = checklistItems.filter(function (item) {
+      const checkbox = item.querySelector('input[type="checkbox"]');
+      return checkbox && checkbox.checked;
+    }).length;
+
+    summary.textContent = storageAvailable
+      ? done + " dari " + total + " poin selesai pada browser ini."
+      : done + " dari " + total + " poin selesai pada sesi ini.";
+  };
+
+  checklistItems.forEach(function (item, index) {
+    const checkbox = item.querySelector('input[type="checkbox"]');
+    if (!checkbox) {
+      return;
+    }
+
+    checkbox.disabled = false;
+    checkbox.removeAttribute("disabled");
+
+    const section = item.closest("section[id]");
+    const label = slugify(item.textContent || "item-" + index);
+    const key = "biostat-handout-check:" + (section ? section.id : "checklist") + ":" + label;
+
+    if (storageAvailable) {
+      const savedState = window.localStorage.getItem(key);
+      if (savedState !== null) {
+        checkbox.checked = savedState === "true";
+      }
+    }
+
+    item.classList.toggle("is-checked", checkbox.checked);
+
+    checkbox.addEventListener("change", function () {
+      if (storageAvailable) {
+        window.localStorage.setItem(key, String(checkbox.checked));
+      }
+      item.classList.toggle("is-checked", checkbox.checked);
+      updateChecklistSummary();
+    });
+  });
+
+  updateChecklistSummary();
+
+  // PREMIUM UX: Back-to-Top Floating Action Button
+  const fab = document.createElement("button");
+  fab.className = "fab-btn";
+  fab.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z"/></svg>';
+  fab.setAttribute("aria-label", "Kembali ke atas");
+  fab.title = "Kembali ke atas";
+  document.body.appendChild(fab);
+
+  fab.addEventListener("click", function() {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  window.addEventListener("scroll", function() {
+    if (window.scrollY > 400) {
+      fab.classList.add("visible");
+    } else {
+      fab.classList.remove("visible");
+    }
+  }, { passive: true });
+};
+
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", initBiostatHandout);
+} else {
+  initBiostatHandout();
+}
+</script>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Disalin!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Disalin!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

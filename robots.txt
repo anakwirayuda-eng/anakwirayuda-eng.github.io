@@ -1,0 +1,17 @@
+﻿# Panduan Skripsi Kedokteran
+
+Rendered handout publik untuk KPRO 5-6.
+
+- Root site: index.html
+- Mirror file: handout.html
+- PDF: handout.pdf
+"@ | Set-Content -Path (Join-Path D:\Dev\Mengajar BIOSTAT\biostat-kpro56\public-handout "README.md") -Encoding UTF8
+
+ = Join-Path D:\Dev\Mengajar BIOSTAT\biostat-kpro56\_output "handout.pdf"
+if (Test-Path ) {
+  Copy-Item -LiteralPath  -Destination (Join-Path D:\Dev\Mengajar BIOSTAT\biostat-kpro56\public-handout "handout.pdf") -Force
+}
+
+@"
+User-agent: *
+Allow: /
